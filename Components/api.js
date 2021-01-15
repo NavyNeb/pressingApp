@@ -7,7 +7,7 @@ export default scrollData = [
     {
         id: '2',
         image: require('../assets/images/pressing_2.jpg'),
-        text: 'Take an easy trip to the pass a commande'
+        text: 'Here is the best article of our store'
     },
     {
         id: '3',
@@ -17,21 +17,22 @@ export default scrollData = [
     {
         id: '4',
         image: require('../assets/images/pressing_4.jpg'),
-        text: 'The best pressing app in the world'
+        text: 'Here is the best article of our store'
     },
     {
         id: '5',
         image: require('../assets/images/pressing_5.jpg'),
-        text: 'The best pressing app in the world'
+        text: 'Here is the best article of our store'
     },
     {
         id: '6',
         image: require('../assets/images/pressing_6.jpg'),
-        text: 'The best pressing app in the world'
+        text: 'Here is the best article of our store'
     },
     {
         id: '7',
         image: require('../assets/images/pressing_7.jpg'),
-        text: 'The best pressing app in the world'
+        text: 'Here is the best article of our store'
     },
 ]
+

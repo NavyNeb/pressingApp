@@ -9,6 +9,8 @@ import Cloths from "../Components/cloths";
 import Login from "./loginStack";
 import PickDelivery from "../Components/pickDelivery";
 import PressingStack from './pressingStack'
+import Welcome from '../Components/welcome'
+import Search from "../Components/mapView"
 
 const clientStack = createStackNavigator();
 
@@ -19,6 +21,8 @@ export default function InOutStack(){
                 headerShown:  false
             }}
         >
+            <clientStack.Screen name = 'map'  component = {Search} />
+            <clientStack.Screen name = 'welcome'  component = {Welcome} />
             <clientStack.Screen name = 'login'  component = {Login} />
             <clientStack.Screen name = 'Home'  component = {HomeBottomTabs} />
             <clientStack.Screen name = 'Cloth'  component = {Cloths} />

@@ -1,17 +1,27 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { ScrollView, View, Text, TouchableOpacity, Dimensions, StatusBar, Image } from 'react-native';
 import { Feather, MaterialIcons } from '@expo/vector-icons';
 import ClothTopTabs from "../routes/clothTopTabs";
 import { connect } from "react-redux";
 const { width, height } = Dimensions.get('screen');
 
-function Cloth({ navigation, Total }) {
-    
+function Cloth({ navigation, Men, Women, Kids, Others }) {
+   
     function calcTotal() {
         let total = 0;
-        Total.map(element => {
-           
+        Men.forEach(element => {
+              total += element
         });
+        Women.forEach(element => {
+              total += element
+        });
+        Kids.forEach(element => {
+              total += element
+        });
+        Others.forEach(element => {
+              total += element
+        });
+        return (total)
     }
     return (
         <View style = {{ flex: 1, width, backgroundColor: '#f1f1f5', height }} >
@@ -38,12 +48,12 @@ function Cloth({ navigation, Total }) {
 
 function mapStateToProps(state) {
     return{
-        Total: [
-            {Men: state.counter_1},
-            {Women: state.counter_2},
-            {Kids: state.counter_3},
-            {Others: state.counter_4}
-        ]
+       
+            Men: state.counter_1,
+            Women: state.counter_2,
+            Kids: state.counter_3,
+            Others: state.counter_4
+        
     }
     
 }

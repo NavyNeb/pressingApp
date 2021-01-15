@@ -9,6 +9,7 @@ export default function CounterOther(state = [0,0,0,0,0], action){
             } )
         
         case 'DECREMENT_OTHERS':
+        console.log('decrese');
             return state.map((value, i) => {
                 if ( action.payload.index === i ) {
                     if (value > 0) {
