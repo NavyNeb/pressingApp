@@ -5,7 +5,7 @@ import scrollData from "./api";
 
 const {width, height} = Dimensions.get('screen')
 
-export default function Welcome(){
+export default function Welcome({navigation}){
     const scrollX = useRef( new Animated.Value(0)).current;
     const ITEM_SIZE = width * 0.72
     const spacer = (width - ITEM_SIZE) /2.5
@@ -58,11 +58,9 @@ export default function Welcome(){
                     }  
                     />
             </View>
-            <TouchableOpacity>
-                
-            </TouchableOpacity>
+            
             </ScrollView>
-            <TouchableOpacity style = {{ width, borderRadius: 15, height: height / 12, backgroundColor: 'dodgerblue', position: 'absolute',bottom: 0, alignSelf: 'center', justifyContent: 'center' }} >
+            <TouchableOpacity onPress = { () => navigation.navigate('login') } style = {{ width, borderRadius: 15, height: height / 12, backgroundColor: 'dodgerblue', position: 'absolute',bottom: 0, alignSelf: 'center', justifyContent: 'center' }} >
                 <Text style = {{ alignSelf:'center', color: 'whitesmoke', fontSize: 17 }} >
                     Continue to Login
                 </Text>
