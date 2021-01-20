@@ -3,11 +3,13 @@ import { View, Text, TouchableOpacity, TextInput, Dimensions, Image, StyleSheet 
 import { Feather, Entypo } from "@expo/vector-icons";
 import { FlatList } from "react-native";
 import { Button } from "react-native";
-import Geolocation from '@react-native-community/geolocation';
+import * as Location from "expo-location";
 import MapView, { Marker } from 'react-native-maps';
 const {width, height} = Dimensions.get('screen')
 
 export default function Search(){
+    const [location, setLocation] = useState(null);
+    const [errorMsg, setErrorMsg] = useState(null);
     const [data, setData] = useState([])
     const [latitude, setLatitude] = useState('')
     const [longitude, setLongitude] = useState('')
@@ -37,30 +39,28 @@ export default function Search(){
             })
     }
 
-    const CurrentPosition = () => {
-      const [error, setError] = useState("");
-      const [position, setPosition] = useState({
-        latitude: 0,
-        longitude: 0
-      });
 
-    }
-    
-      const getPosition = () => {
-        Geolocation.getCurrentPosition(
-          pos => {
-            setError("");
-            setPosition({
-              latitude: pos.coords.latitude,
-              longitude: pos.coords.longitude
-            });
-          },
-          e => setError(e.message)
-        );
-      };
+    useEffect(() => {
+      (async () => {
+        let { status } = await Location.requestPermissionsAsync();
+        if (status !== 'granted') {
+          setErrorMsg('Permission to access location was denied');
+          return;
+        }
+  
+        let location = await Location.getCurrentPositionAsync({});
+        setLocation(location);
+      })();
+    }, []);
 
-    
-
+    let text = 'Waiting..';
+  if (errorMsg) {
+    text = errorMsg;
+  } else if (location) {
+    text = JSON.stringify(location);
+  }
+  
+  console.log(text);
     return ( 
         <View style = {{ backgroundColor:'#f1f1f6', width, height, alignItems: 'center', }} >
             <View style = {{ paddingHorizontal: 5, zIndex: 2, height: height / 14.5, width: width - 15, backgroundColor: '#fff', marginTop: 45, 

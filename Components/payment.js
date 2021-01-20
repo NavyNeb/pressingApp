@@ -36,7 +36,7 @@ export default function Payment({navigation}){
                     <View style = {{ backgroundColor: '#fff' }}>
                         <Text style = {{ fontWeight: 'bold', paddingHorizontal: 10, marginTop: 20, marginBottom: 34 }} >Enter Account Deatils</Text>
                         <View style = {{ paddingHorizontal: 10 }} >
-                            <View style = {{ borderBottomWidth: 2, borderColor: 'gray', paddingVertical: 6, height: 55 }} >
+                            <View style = {{ borderBottomWidth: 1, borderColor: 'gray', paddingVertical: 6, height: 55 }} >
                                 <TextInput placeholder = 'Enter Telephone number' style = {{ height: '100%', }}  />
                             </View>
                             <View style = {{ height: 350, marginTop: 35 }} >
@@ -49,8 +49,8 @@ export default function Payment({navigation}){
                    
                 </ScrollView>
                 <TouchableOpacity onPress = { () => navigation.navigate('OrderDetails') } style = {{ height: height / 12, width, backgroundColor: 'dodgerblue', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', borderRadius: 20 }} >
-                    <Text style = {{ fontSize: 18, color: '#fff' }} >Amount Payable (XAF) </Text>
-                    <Text style = {{ fontSize: 18, color: '#fff' }} >Next <Entypo name = 'chevron-thin-right' color = '#fff' size = {14} /> </Text>
+                    <Text style = {{ fontSize: 18, color: '#fff', paddingHorizontal: 5 }} >Amount Payable (XAF) </Text>
+                    <Text style = {{ fontSize: 28, color: '#fff' }} >Next <Entypo name = 'chevron-thin-right' color = '#fff' size = {24} /> </Text>
                 </TouchableOpacity>
             </View>
         </TouchableWithoutFeedback>

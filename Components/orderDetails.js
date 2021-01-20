@@ -27,7 +27,7 @@ export default function OrderDetails({navigation}) {
                     </View>
                 </View>
             </View>
-            <View style={{ width, height: height / 5, backgroundColor: '#fff', marginBottom: 4 }} >
+            <View style={{ width, height: height / 5, display: 'flex', justifyContent: 'center', backgroundColor: '#fff', marginBottom: 4 }} >
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }} >
                     <View style={{ paddingHorizontal: 10 }} >
                         <Text style={{ fontSize: 14, color: 'gray', marginVertical: 5 }} >Pick Up</Text>
@@ -40,15 +40,15 @@ export default function OrderDetails({navigation}) {
                         <Text style={{ fontSize: 14, color: 'gray' }} >09:00 am - 10:00 am</Text>
                     </View>
                 </View>
-                <View style={{ paddingHorizontal: 10, marginTop: 10, width }} >
+                <View style={{ paddingHorizontal: 10, marginTop: 10, width, display: 'flex' }} >
                     <Text style={{ fontSize: 14, color: 'gray', marginBottom: 5 }} >Pick up Address</Text>
                     <Text style={{ fontSize: 14, color: '#000', fontWeight: 'bold' }} >Douala,Kotto village(carrefour soudeur face conteneur blue)</Text>
                 </View>
             </View>
-            <View style={{ width, height: height / 2.2, backgroundColor: '#fff', paddingVertical: 6, paddingHorizontal: 8 }} >
+            <View style={{ width, height: height / 2.6, overflow: 'scroll' , backgroundColor: '#fff', paddingHorizontal: 8, display : 'flex', position :'relative'  }} >
                 <Text style={{ fontSize: 14, color: 'gray', marginVertical: 15 }} >Cloth List</Text>
                 <View>
-                    <ScrollView style={{ height: height / 5, }} >
+                    <ScrollView style={{ height: height / 4.7,  }} >
                         <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }} >
                             <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', }}>
                                 <Text>(2)</Text>
@@ -83,11 +83,11 @@ export default function OrderDetails({navigation}) {
                         </View>
                     </ScrollView>
                 </View>
-                <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }} >
+                <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 7 }} >
                     <Text style={{ fontSize: 14, color: 'gray', }} >Sub Total</Text>
                     <Text style={{ fontWeight: 'bold', color: '#000', }} >TotalXAF</Text>
                 </View>
-                <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 25 }} >
+                <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }} >
                     <Text style={{ fontSize: 14, color: 'gray', }} >Transport</Text>
                     <Text style={{ fontWeight: 'bold', color: '#000', }} >TotalXAF</Text>
                 </View>
@@ -96,9 +96,9 @@ export default function OrderDetails({navigation}) {
                     <Text style={{ fontSize: 14, color: 'dodgerblue', fontWeight: 'bold' }} >TotalXAF</Text>
                 </View>
             </View>
-             <TouchableOpacity onPress = { () => navigation.navigate('OrderDetails') } style = {{ height: height / 12, width, backgroundColor: 'dodgerblue', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', borderRadius: 20 }} >
+             <TouchableOpacity onPress = { () => navigation.navigate('OrderDetails') } style = {{ height: height / 12, width, backgroundColor: 'dodgerblue', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'column', justifyContent: 'center', }} >
                     <Text style = {{ fontSize: 18, color: '#fff' }} >Amount Payable (XAF) </Text>
-                </TouchableOpacity>
+            </TouchableOpacity>
         </View >
     )
 }

@@ -2,7 +2,6 @@ import React from 'react'
 import { createStackNavigator } from "@react-navigation/stack";
 import HomeBottomTabs from "./homeBottomTabs";
 import ReviewOrder from "../Components/reviewOrder";
-import SelectAddress from "../Components/selectAddress";
 import Payment from "../Components/payment";
 import OrderDetails from "../Components/orderDetails";
 import Cloths from "../Components/cloths";
@@ -27,7 +26,6 @@ export default function InOutStack(){
             <clientStack.Screen name = 'map'  component = {Search} />
             <clientStack.Screen name = 'Cloth'  component = {Cloths} />
             <clientStack.Screen name = 'ReviewOrders'  component = {ReviewOrder} />
-            <clientStack.Screen name = 'SelectAddress'  component = {SelectAddress} />
             <clientStack.Screen name = 'PickDelivery'  component = {PickDelivery} />
             <clientStack.Screen name = 'Payment'  component = {Payment} />
             <clientStack.Screen name = 'pressing'  component = {PressingStack} />

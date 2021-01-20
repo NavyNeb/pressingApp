@@ -4,20 +4,14 @@ import { Feather, Entypo } from '@expo/vector-icons';
 
 const { width, height } = Dimensions.get('screen');
 
-export default function Address({navigation}){
+export default function DeliveryAddress({navigation}){
     return(
         <TouchableWithoutFeedback  onPress = { Keyboard.dismiss }  >
             <View style = {{ width, height, flex: 1, backgroundColor: '#f1f1f5', }} >
                 <StatusBar backgroundColor="lightgray" />
-                <View style = {{ dipslay: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingVertical: 15, height: height / 11.7, backgroundColor: '#ffff'  }} >
-                    <TouchableOpacity onPress = { () => navigation.navigate('ReviewOrders') } >
-                        <Feather name = 'arrow-left' size = {28} color = 'dodgerblue' />
-                    </TouchableOpacity>
-                    <Text style = {{ fontSize: 24, marginLeft: 20 }} >Select Address</Text>
-                </View>
                 <View>
                     <Text style = {{ marginVertical: 20, fontWeight: '900', fontSize: 17 }} >
-                        Select Pick up & Delivery Address
+                        Select Delivery Address
                     </Text>
                 </View>
                     <ScrollView style = {{ width }} >
@@ -37,16 +31,16 @@ export default function Address({navigation}){
 
                     </ScrollView>
                 
-                    <View style = {{ backgroundColor: '#fff' }}>
+                    <View style = {{ backgroundColor: '#fff', borderBottomEndRadius: 20, borderBottomStartRadius: 20 }}>
                         <Text style = {{ fontWeight: 'bold', paddingHorizontal: 10, marginTop: 20, marginBottom: 34 }} >Enter Address Details</Text>
                         <View style = {{ paddingHorizontal: 10 }} >
-                            <View style = {{ borderBottomWidth: 2, borderColor: 'gray', paddingVertical: 6, height: 55 }} >
+                            <View style = {{ borderBottomWidth: 1, borderColor: 'gray', paddingVertical: 6, height: 55 }} >
                                 <TextInput placeholder = 'City / Town' style = {{ height: '100%', }}  />
                             </View>
-                            <View style = {{ borderBottomWidth: 2, borderColor: 'gray', paddingVertical:6, height: 55 }} >
+                            <View style = {{ borderBottomWidth: 1, borderColor: 'gray', paddingVertical:6, height: 55 }} >
                                 <TextInput placeholder = 'Quarters' style = {{ height: '100%', }}  />
                             </View>
-                            <View style = {{ borderWidth: 1, borderColor: 'gray', borderRadius: 10, marginVertical: 20, paddingVertical:6, height: 75 }} >
+                            <View style = {{ borderWidth: 1, borderColor: 'gray', borderRadius: 10, marginVertical: 20, paddingVertical:6, paddingHorizontal: 6, height: 75 }} >
                                 <TextInput multiple keyboardType = 'name-phone-pad' placeholder = 'Enter address description' style = {{ height: '100%', }}  />
                             </View>
                         </View>
