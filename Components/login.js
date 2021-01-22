@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View,  Text, TouchableOpacity, Image, StatusBar, Dimensions, TextInput, Keyboard, TouchableWithoutFeedback } from 'react-native'
 import { Entypo } from '@expo/vector-icons'
-// import signUp from './signUp';
+import signUp from './signUp';
 const {width, height} = Dimensions.get('screen')
 
 
