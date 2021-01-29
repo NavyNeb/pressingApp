@@ -1,17 +1,31 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Flatlist, View, Text, TouchableOpacity, Dimensions, StatusBar, Image } from 'react-native';
 import { connect } from "react-redux";
 import { Feather, MaterialIcons } from '@expo/vector-icons'
 import { ScrollView } from 'react-native';
+import { State } from 'react-native-gesture-handler';
 const { width, height } = Dimensions.get('screen');
 
- function Men({ counters, increaseCounter, decreaseCounter } ){
+ function Men({ counters, increaseCounter, decreaseCounter, servId, prestaId } ){
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true)
+    console.log(servId);
+    useEffect(() => {
+        fetch('http://192.168.100.207:8000/viewset/tarification/?idprestataire=' + prestaId + '&idservice=' + servId)
+        .then((response)=> response.json())
+        .then((responseJson)=> {
+            setData(responseJson)
+            console.log('response', data);
+            setLoading(false)
+        })
+    }, [0])
+
     function list() {
         return counters.map((value, i) => {
                 return (
                     <View key = {i} style = {{ height: height / 10, marginBottom: 2,  backgroundColor: '#fff', alignItems: 'flex-start', display: 'flex', flexDirection: 'row', justifyContent: 'center',paddingRight: 8 }} >
                     <View style = {{ height: '100%', width: '15%', alignItems: 'center', justifyContent: 'center' }} >
-                        <Image style = {{height: 55, width: 55 }} source = {require('../icons/pressing/001-washing-machine.png')} />
+                        <Image style = {{height: 55, width: 55 }} source = {require('../icons/pressing/002-t-shirt.png')} />
                     </View>
                     <View style = {{ width: '85%', height: '100%', display: 'flex', flexDirection: 'row', paddingHorizontal: 6, alignItems: 'center', justifyContent: 'space-between'  }} >
                         <Text style = {{ fontSize: 20, fontWeight: 'bold' }} >T-shirt</Text>
@@ -50,7 +64,10 @@ const { width, height } = Dimensions.get('screen');
 
 function mapStateToProps(state){
     return {
+        prestaId: state.getId,
+        servId: state.servId,
         counters: state.counter_1
+
     }
 }
 

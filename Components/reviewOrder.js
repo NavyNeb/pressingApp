@@ -36,7 +36,7 @@ export default function ReviewsOrder({navigation}){
                                 <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', }}>
                                     <Text style = {{ fontWeight: 'bold', color: '#000', width: width / 7, fontSize: 18 }} >3</Text>
                                     <Text style={{ fontWeight: 'bold', color: '#000', marginRight: 30, fontSize: 18 }} >X</Text>
-                                    <Text style = {{ fontWeight: 'bold', color: '#000', fontSize: 18 }} >shirt(Man)</Text>
+                                    <Text style = {{ fontWeight: 'bold', color: '#000', fontSize: 18 }} >shirt(Woman)</Text>
                                 </View>
                                 <Text style = {{ fontWeight: 'bold', color: '#000', fontSize: 18 }} >854XAF</Text>
                             </View>
@@ -46,7 +46,7 @@ export default function ReviewsOrder({navigation}){
                                 <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', }}>
                                     <Text style = {{ fontWeight: 'bold', color: '#000', width: width / 7, fontSize: 18 }} >3</Text>
                                     <Text style={{ fontWeight: 'bold', color: '#000', marginRight: 30, fontSize: 18 }} >X</Text>
-                                    <Text style = {{ fontWeight: 'bold', color: '#000', fontSize: 18 }} >shirt(Man)</Text>
+                                    <Text style = {{ fontWeight: 'bold', color: '#000', fontSize: 18 }} >shirt(Kids)</Text>
                                 </View>
                                 <Text style = {{ fontWeight: 'bold', color: '#000', fontSize: 18 }} >854XAF</Text>
                             </View>
@@ -56,7 +56,7 @@ export default function ReviewsOrder({navigation}){
                                 <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', }}>
                                     <Text style = {{ fontWeight: 'bold', color: '#000', width: width / 7, fontSize: 18 }} >3</Text>
                                     <Text style={{ fontWeight: 'bold', color: '#000', marginRight: 30, fontSize: 18 }} >X</Text>
-                                    <Text style = {{ fontWeight: 'bold', color: '#000', fontSize: 18 }} >shirt(Man)</Text>
+                                    <Text style = {{ fontWeight: 'bold', color: '#000', fontSize: 18 }} >shirt(Others)</Text>
                                 </View>
                                 <Text style = {{ fontWeight: 'bold', color: '#000', fontSize: 18 }} >854XAF</Text>
                             </View>

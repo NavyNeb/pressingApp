@@ -10,6 +10,7 @@ import PickDelivery from "../Components/pickDelivery";
 import PressingStack from './pressingStack'
 import Welcome from '../Components/welcome'
 import Search from "../Components/mapView"
+import GetPrestaData from "../Components/getPrestaData";
 
 const clientStack = createStackNavigator();
 
@@ -20,9 +21,11 @@ export default function InOutStack(){
                 headerShown:  false
             }}
         >
+           
+            
             <clientStack.Screen name = 'welcome'  component = {Welcome} />
             <clientStack.Screen name = 'login'  component = {Login} />
-            <clientStack.Screen name = 'Home'  component = {HomeBottomTabs} />
+            <clientStack.Screen name = 'Home'  component = {HomeBottomTabs}  />
             <clientStack.Screen name = 'map'  component = {Search} />
             <clientStack.Screen name = 'Cloth'  component = {Cloths} />
             <clientStack.Screen name = 'ReviewOrders'  component = {ReviewOrder} />

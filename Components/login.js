@@ -27,7 +27,7 @@ export default function Login( {navigation} ){
           .then(resp => {
             
             if (resp.token!=undefined) {
-                navigation.navigate('Home')
+                navigation.navigate('map')
             }
             else{
                 setError('username or password incorrect')
@@ -58,7 +58,7 @@ export default function Login( {navigation} ){
                     <TextInput style = {{ width:width - 55, height: '100%', marginLeft: 25,}} placeholder = 'Password' onChangeText={setPassword}
                      placeholderTextColor= '#9a99a2' placeholderTextAlign = 'center' secureTextEntry />
                     <TouchableOpacity style = {{ position: 'absolute' }} >
-                        <Text style ={{ color: '#4f95cb', fontWeight: 'bold' }} >Forgot ? </Text>
+                        <Text style ={{ color: '#4f95cb', fontWeight: 'bold' }} ></Text>
                     </TouchableOpacity>
                 </View>
                 <TouchableOpacity onPress={signUp}  style = {{ width: width -10, height: height / 15, backgroundColor: '#4f95cb', paddingVertical: 10, marginVertical: 10, borderRadius: 8 }} >  

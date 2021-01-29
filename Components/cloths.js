@@ -7,22 +7,22 @@ const { width, height } = Dimensions.get('screen');
 
 function Cloth({ navigation, Men, Women, Kids, Others }) {
    
-    function calcTotal() {
-        let total = 0;
-        Men.forEach(element => {
-              total += element
-        });
-        Women.forEach(element => {
-              total += element
-        });
-        Kids.forEach(element => {
-              total += element
-        });
-        Others.forEach(element => {
-              total += element
-        });
-        return (total)
-    }
+    // function calcTotal() {
+    //     let total = 0;
+    //     Men.forEach(element => {
+    //           total += element
+    //     });
+    //     Women.forEach(element => {
+    //           total += element
+    //     });
+    //     Kids.forEach(element => {
+    //           total += element
+    //     });
+    //     Others.forEach(element => {
+    //           total += element
+    //     });
+    //     return (total)
+    // }
     return (
         <View style = {{ flex: 1, width, backgroundColor: '#f1f1f5', height }} >
             <StatusBar backgroundColor="lightgray" />
@@ -35,7 +35,7 @@ function Cloth({ navigation, Men, Women, Kids, Others }) {
             <ClothTopTabs />
             <View style = {{ backgroundColor: 'dodgerblue', width, height: height / 12, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 10 }} >
                 <Text style = {{ color: '#fff', fontSize: 18 }} >
-                    Total (457XAF) |<Text style = {{ color: '#fff', fontSize: 12 }} > {calcTotal()} Items added </Text>
+                    <Text style = {{ color: '#fff', fontSize: 12 }} >  Select your items here </Text>
                 </Text>
                 <TouchableOpacity onPress = { () => navigation.navigate('ReviewOrders') }  style = {{ width: 30, height: 30, backgroundColor: 'dodgerblue', alignItems: 'center', justifyContent: 'center', flexDirection: 'row'  }} >
                     <Text style = {{ color: '#fff', fontSize: 14 }} >Next</Text>

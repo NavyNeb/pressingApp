@@ -77,6 +77,7 @@ export default function SignUp( {navigation} ){
                             ],)
                 } else {
                     submitData()
+                    navigation.navigate('Login')
                 }
             })
         )
@@ -269,7 +270,7 @@ export default function SignUp( {navigation} ){
             <TouchableOpacity>
             <View style = {{ backgroundColor: '#fafafa', width: width -10, height: height / 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', paddingVertical: 6, borderBottomWidth: 2, borderBottomColor:'#b2b0c0', marginVertical: 9, elevation: 2 }} >
                 <Entypo name = 'lock' color = '#4f95cb' size = {21}/>
-                <TextInput onChangeText = { (value) => setPwd1(value) } style = {{ width:width - 55, height: '100%', marginLeft: 25,}} placeholder = ' Create Password' placeholderTextColor= '#9a99a2' placeholderTextAlign = 'center'  />
+                <TextInput onChangeText = { (value) => setPwd1(value) } style = {{ width:width - 55, height: '100%', marginLeft: 25,}} placeholder = ' Create Password' placeholderTextColor= '#9a99a2' placeholderTextAlign = 'center' secureTextEntry  />
             </View>
             </TouchableOpacity>
             
@@ -279,7 +280,7 @@ export default function SignUp( {navigation} ){
                 <Entypo name = 'lock' color = '#4f95cb' size = {21}/>
                 <TextInput onChangeText = { (value) => {
                     setPwd2(value);
-                }} style = {{ width:width - 55, height: '100%', marginLeft: 25,}} placeholder = ' Confirm Password' placeholderTextColor= '#9a99a2' placeholderTextAlign = 'center'  />
+                }} style = {{ width:width - 55, height: '100%', marginLeft: 25,}} placeholder = ' Confirm Password' placeholderTextColor= '#9a99a2' placeholderTextAlign = 'center' secureTextEntry />
             </View>
             </TouchableOpacity>
             </ScrollView>

@@ -10,7 +10,7 @@ function Others({ counters, increaseCounter, decreaseCounter }){
            return (
             <View key = {i} style = {{ height: height / 10, marginBottom: 2,  backgroundColor: '#fff', alignItems: 'flex-start', display: 'flex', flexDirection: 'row', justifyContent: 'center',paddingRight: 8 }} >
             <View style = {{ height: '100%', width: '15%', alignItems: 'center', justifyContent: 'center' }} >
-                <Image style = {{height: 55, width: 55 }} source = {require('../icons/pressing/001-washing-machine.png')} />
+                <Image style = {{height: 55, width: 55 }} source = {require('../icons/pressing/002-t-shirt.png')} />
             </View>
             <View style = {{ width: '85%', height: '100%', display: 'flex', flexDirection: 'row', paddingHorizontal: 6, alignItems: 'center', justifyContent: 'space-between'  }} >
                 <Text style = {{ fontSize: 20, fontWeight: 'bold' }} >T-shirt</Text>

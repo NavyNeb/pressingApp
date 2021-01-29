@@ -6,7 +6,7 @@ import Offers from "../Components/offers";
 
 const HomeTabs = createBottomTabNavigator();
 
-export default function HomeTab(params) {
+export default function HomeTab() {
     return(
         <HomeTabs.Navigator>
             <HomeTabs.Screen name = 'Home' component = {Home} />
