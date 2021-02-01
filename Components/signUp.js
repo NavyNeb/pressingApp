@@ -29,7 +29,7 @@ export default function SignUp( {navigation} ){
     function submitData(){
                     return(
                         
-                        fetch('http://192.168.100.207:8000/viewset/register/', {
+                        fetch('http://pressingliveapp.herokuapp.com/viewset/register/', {
                             method: 'POST',
                             headers: {
                                 'Accept': 'application/json',

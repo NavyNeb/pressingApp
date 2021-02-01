@@ -6,12 +6,14 @@ import { ScrollView } from 'react-native';
 import { State } from 'react-native-gesture-handler';
 const { width, height } = Dimensions.get('screen');
 
+
  function Men({ counters, increaseCounter, decreaseCounter, servId, prestaId } ){
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true)
     console.log(servId);
+
     useEffect(() => {
-        fetch('http://192.168.100.207:8000/viewset/tarification/?idprestataire=' + prestaId + '&idservice=' + servId)
+        fetch('http://pressingliveapp.herokuapp.com/viewset/tarification/?idprestataire=' + prestaId + '&idservice=' + servId)
         .then((response)=> response.json())
         .then((responseJson)=> {
             setData(responseJson)
@@ -19,6 +21,8 @@ const { width, height } = Dimensions.get('screen');
             setLoading(false)
         })
     }, [0])
+
+    
 
     function list() {
         return counters.map((value, i) => {

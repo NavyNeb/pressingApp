@@ -24,7 +24,7 @@ function Search({navigation, idPresta, getPrestaId}){
     const [search, setSearch] = useState('')
     const getData = () => {
             if (search === '') {
-              fetch('http://192.168.100.207:8000/search')
+              fetch('http://pressingliveapp.herokuapp.com/search')
             .then(Response => Response.json())
             .then(responseJson => {
                 setData(responseJson)
@@ -38,7 +38,7 @@ function Search({navigation, idPresta, getPrestaId}){
         console.log(longitude);
         console.log(latitude);
             } else {
-              fetch('http://192.168.100.207:8000/search?search=' + search)
+              fetch('http://pressingliveapp.herokuapp.com/search?search=' + search)
             .then(Response => Response.json())
             .then(responseJson => {
                 setData(responseJson)

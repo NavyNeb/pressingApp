@@ -1,4 +1,4 @@
-import { GET_PRESTA_ID, GET_SERVICE_ID } from "../Store/types";
+import { GET_PRESTA_ID } from "../Store/types";
 
 export const getPrestaId = (id) => (dispatch) => {
     dispatch(

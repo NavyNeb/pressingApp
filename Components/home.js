@@ -13,7 +13,7 @@ function Home( {navigation, prestaId, getServiceId} ){
     const [loading, setLoading] = useState(true)
     const [serviceId, setSerciveId] = useState(0)
     useEffect(() => {
-          fetch('http://192.168.100.207:8000/viewset/prestataire/' + prestaId.value)
+          fetch('http://pressingliveapp.herokuapp.com/viewset/prestataire/' + prestaId.value)
           .then((response)=> response.json())
           .then((responseJson) => {
             setPrestaData(responseJson)
@@ -25,10 +25,7 @@ function Home( {navigation, prestaId, getServiceId} ){
     console.log(prestaId.value);
     
 
-    const sendId = (id) => {
-        fetch('http://192.168.100.207:8000/viewset/tarification/?idprestataire=2&idservice=2')
-    }
-
+    
     const getServices = () => {
   
     if (loading) {

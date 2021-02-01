@@ -13,7 +13,7 @@ export default function Login( {navigation} ){
     const [error, setError] = useState('')
 
     function signUp () {
-        fetch('http://192.168.100.207:8000/login',{
+        fetch('http://pressingliveapp.herokuapp.com/login',{
             method:'POST',
             headers:{
                 'content-type': 'application/json',
