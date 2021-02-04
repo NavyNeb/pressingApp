@@ -1,10 +1,14 @@
 import React from 'react';
 import { TouchableOpacity, ScrollView, View, Text, Image, Dimensions, StatusBar, TextInput, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { Feather, Entypo } from '@expo/vector-icons';
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { getCity,getQuarters, getDesc } from "../Action/address";
 
 const { width, height } = Dimensions.get('screen');
 
-export default function PickAddress({navigation}){
+function PickAddress({navigation, getCity, getQuarters, getDesc, pickAddress }){
+    console.log("this",pickAddress);
     return(
         <TouchableWithoutFeedback  onPress = { Keyboard.dismiss }  >
             <View style = {{ width, height, flex: 1, backgroundColor: '#f1f1f5', }} >
@@ -15,33 +19,18 @@ export default function PickAddress({navigation}){
                     </Text>
                 </View>
                     <ScrollView style = {{ width }} >
-                    <ScrollView horizontal showsHorizontalScrollIndicator = {false} contentContainerStyle = {{ justifyContent: 'center', alignItems: 'center', paddingHorizontal: 5, paddingRight: 4 }}  style = {{ width, paddingHorizontal: 10, height: 190, }} >
-                        <TouchableOpacity style = {{ display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff', width: 125, height: 125, borderRadius: 15 }} >
-                            <Image style = {{height: 65, width: 65 }} source = {require('../icons/pressing/home_page_2.png')} />
-                            <Text>Home</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style = {{ display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff', width: 125, height: 125, borderRadius: 15, marginHorizontal: 20 }} >
-                            <Image style = {{height: 65, width: 65 }} source = {require('../icons/pressing/office_2.png')} />
-                            <Text>Office</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style = {{ display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff', width: 125, height: 125, borderRadius: 15, marginRight: 5 }} >
-                            <Image style = {{height: 65, width: 65 }} source = {require('../icons/pressing/visit_2.png')} />
-                            <Text>Others</Text>
-                        </TouchableOpacity>
-
-                    </ScrollView>
-                
-                    <View style = {{ backgroundColor: '#fff', borderBottomEndRadius: 20, borderBottomStartRadius: 20 }}>
+                   
+                    <View style = {{ backgroundColor: '#fff', borderRadius: 20, height: height / 2, justifyContent: 'center' }}>
                         <Text style = {{ fontWeight: 'bold', paddingHorizontal: 10, marginTop: 20, marginBottom: 34 }} >Enter Address Details</Text>
                         <View style = {{ paddingHorizontal: 10 }} >
                             <View style = {{ borderBottomWidth: 1, borderColor: 'gray', paddingVertical: 6, height: 55 }} >
-                                <TextInput placeholder = 'City / Town' style = {{ height: '100%', }}  />
+                                <TextInput onChangeText = { (val) => getCity(val) } placeholder = 'City / Town' style = {{ height: '100%', }}  />
                             </View>
                             <View style = {{ borderBottomWidth: 1, borderColor: 'gray', paddingVertical:6, height: 55 }} >
-                                <TextInput placeholder = 'Quarters' style = {{ height: '100%', }}  />
+                                <TextInput onChangeText = { (val) => getQuarters(val) } placeholder = 'Quarters' style = {{ height: '100%', }}  />
                             </View>
                             <View style = {{ borderWidth: 1, borderColor: 'gray', borderRadius: 10, marginVertical: 20, paddingVertical:6, paddingHorizontal: 6, height: 75 }} >
-                                <TextInput multiple keyboardType = 'name-phone-pad' placeholder = 'Enter address description' style = {{ height: '100%', }}  />
+                                <TextInput onChangeText = { (val) => getDesc(val) } multiple keyboardType = 'name-phone-pad' placeholder = 'Enter address description' style = {{ height: '100%', }}  />
                             </View>
                         </View>
                     </View>
@@ -54,3 +43,19 @@ export default function PickAddress({navigation}){
         </TouchableWithoutFeedback>
     )
 }
+function mapStateToProps(state){
+    return{
+        pickAddress: state.pickAddress
+    }
+}
+
+function mapDispatchToProps(dispatch){
+    return{
+        dispatch,
+        ...bindActionCreators({
+            getCity, getQuarters, getDesc
+        }, dispatch )
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PickAddress)

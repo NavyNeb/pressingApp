@@ -6,8 +6,12 @@ import CounterOther from "./CounterOthers";
 import GetPrestaId from "./getPrestaId";
 import PrestaReducer from "./prestaReducer";
 import GetServiceId from "./getServiceId";
+import GetPickAddress from './address';
+import GetDeliveryAddress  from "./deliveryAddress";
 
 export default combineReducers({
+    deliveryAddress: GetDeliveryAddress,
+    pickAddress: GetPickAddress,
     servId: GetServiceId,
     getId: GetPrestaId,
     reducerPresta: PrestaReducer,

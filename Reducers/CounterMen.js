@@ -1,3 +1,6 @@
+
+
+
 export default function CounterMen(state = [0,0,0,0,0], action){
     switch (action.type) {
         case 'INCREMENT_MEN':

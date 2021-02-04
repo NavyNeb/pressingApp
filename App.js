@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import Store from '../pressingApp/Store/'
 import { NavigationContainer } from "@react-navigation/native";
 import BottonTabs from "./routes/clientStack";
+import Paypal from "./Components/paypal";
 import  AppLoading  from "expo-app-loading";
 import * as Font from "expo-font";
 import { StyleSheet, Text, View } from 'react-native';
@@ -16,6 +17,7 @@ export default function App() {
 )
     if (fontsLoaded) {
      return (
+      // <Paypal />
       <NavigationContainer>
         <Provider store = {Store} >
           <BottonTabs />
