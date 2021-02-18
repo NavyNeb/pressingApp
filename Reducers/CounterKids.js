@@ -1,4 +1,4 @@
-import { ADD_TO_CART, REMOVE_FROM_CART } from "../Store/types";
+import { ADD_TO_CART, REMOVE_FROM_CART, MODIFY_TARIF, SAVE_MODIF } from "../Store/types";
 const InitialState = {
     items: [
         {name: 'Sweaters', id: 0,  price: 450, category: 'Kids', quantity: 0, totalItem: 0, Image: require('../assets/clothes/Kids/sweaters_Kids.png') },
@@ -22,7 +22,7 @@ export default function Counterkids(state = InitialState, action){
     if(action.type === ADD_TO_CART){
         let addedItem = state.items.find(item=> item.id === action.payload)
         //check if the action id exists in the addedItems
-       let existed_item = state.addedItems.find(item=> action.payload === item.id)
+       let existed_item = state.addedItems.find(item => action.payload === item.id)
        if(existed_item)
        {
           addedItem.quantity += 1
@@ -72,7 +72,18 @@ export default function Counterkids(state = InitialState, action){
     }
   }
 
-  else {
+  else if( action.type === MODIFY_TARIF ) {
+      state.items.map((item, id) => {
+          if (item.id === action.id ) {
+              item.name = action.tarif
+              return {
+                ...state
+              }
+          } else {
+              return state
+          }
+      })
+  } else {
       return state
   }
 

@@ -1,13 +1,15 @@
+import React from 'react'
 import Assigned from "../Components/pressing/assigned";
 import Completed from "../Components/pressing/completed";
-import ReviewOrder from "../Components/pressing/reviewOrder";
+import OrderTabs from "../routes/pressingOrders";
 
-import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
+import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 
-const pressing = createMaterialTopTabNavigator()
+const pressing = createBottomTabNavigator()
 export default function StackPresing(params) {
     return (
         <pressing.Navigator>
+            <pressing.Screen name = 'OrderTab' component={OrderTabs} />
             <pressing.Screen name = 'Assigned' component={Assigned} />
             <pressing.Screen name = 'Completed' component={ Completed } />
         </pressing.Navigator>

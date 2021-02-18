@@ -4,11 +4,22 @@ import { Feather, Entypo } from '@expo/vector-icons';
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { getCity,getQuarters, getDesc } from "../Action/address";
+import Commande from '../Reducers/commande';
 
 const { width, height } = Dimensions.get('screen');
 
-function PickAddress({navigation, getCity, getQuarters, getDesc, pickAddress }){
+function PickAddress({navigation, pickAddress, commande }){
     console.log("this",pickAddress);
+    console.log('Here',commande);
+    const GetCity = (val) => {
+        commande.pickAddress.city = val
+    }
+    const getQuarters = (val) => {
+        commande.pickAddress.quarters = val
+    }
+    const getDesc = (val) => {
+        commande.pickAddress.desc = val
+    }
     return(
         <TouchableWithoutFeedback  onPress = { Keyboard.dismiss }  >
             <View style = {{ width, height, flex: 1, backgroundColor: '#f1f1f5', }} >
@@ -24,7 +35,7 @@ function PickAddress({navigation, getCity, getQuarters, getDesc, pickAddress }){
                         <Text style = {{ fontWeight: 'bold', paddingHorizontal: 10, marginTop: 20, marginBottom: 34 }} >Enter Address Details</Text>
                         <View style = {{ paddingHorizontal: 10 }} >
                             <View style = {{ borderBottomWidth: 1, borderColor: 'gray', paddingVertical: 6, height: 55 }} >
-                                <TextInput onChangeText = { (val) => getCity(val) } placeholder = 'City / Town' style = {{ height: '100%', }}  />
+                                <TextInput onChangeText = { (val) =>  GetCity(val) } placeholder = 'City / Town' style = {{ height: '100%', }}  />
                             </View>
                             <View style = {{ borderBottomWidth: 1, borderColor: 'gray', paddingVertical:6, height: 55 }} >
                                 <TextInput onChangeText = { (val) => getQuarters(val) } placeholder = 'Quarters' style = {{ height: '100%', }}  />
@@ -43,9 +54,11 @@ function PickAddress({navigation, getCity, getQuarters, getDesc, pickAddress }){
         </TouchableWithoutFeedback>
     )
 }
+
 function mapStateToProps(state){
     return{
-        pickAddress: state.pickAddress
+        pickAddress: state.pickAddress,
+        commande: state.commande,
     }
 }
 

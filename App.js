@@ -6,6 +6,8 @@ import BottonTabs from "./routes/clientStack";
 import Paypal from "./Components/paypal";
 import  AppLoading  from "expo-app-loading";
 import * as Font from "expo-font";
+import Assigned from "./Components/pressing/assigned";
+import Service from "./Components/pressing/services";
 import { StyleSheet, Text, View } from 'react-native';
 
 export default function App() {
@@ -17,7 +19,7 @@ export default function App() {
 )
     if (fontsLoaded) {
      return (
-      // <Paypal />
+      // <Service />
       <NavigationContainer>
         <Provider store = {Store} >
           <BottonTabs />

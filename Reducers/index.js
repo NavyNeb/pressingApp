@@ -8,8 +8,12 @@ import PrestaReducer from "./prestaReducer";
 import GetServiceId from "./getServiceId";
 import GetPickAddress from './address';
 import GetDeliveryAddress  from "./deliveryAddress";
+import Commande from "./commande";
+import reqOrder from "./reqOrders";
 
 export default combineReducers({
+    Order: reqOrder,
+    commande: Commande,
     deliveryAddress: GetDeliveryAddress,
     pickAddress: GetPickAddress,
     servId: GetServiceId,

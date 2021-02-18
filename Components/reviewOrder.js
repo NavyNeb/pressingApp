@@ -3,13 +3,19 @@ import { TouchableOpacity, Text, View, Dimensions, StatusBar, ScrollView } from 
 import { Feather, Entypo } from '@expo/vector-icons';
 import { BarIndicator } from 'react-native-indicators'
 import { connect } from "react-redux";
-import { isEmptyArray } from 'formik';
+import { bindActionCreators } from "redux";
+import { orderActions } from "../Action/orderAction";
 
 
 const { width, height } = Dimensions.get('screen');
 
-function ReviewsOrder({navigation, prices}){
-
+function ReviewsOrder({navigation, prices, commande}){
+   
+    const loadCommande = () => {
+        return commande.commande.orderItem = prices.addedItems
+    }
+    commande.commande.orderItem = prices.addedItems
+    commande.commande.payment.total = prices.total
     const loadPrices = () => {
        if ( Array.isArray(prices.addedItems) && prices.addedItems.length ) {
         return prices.addedItems.map((item)=>{
@@ -35,11 +41,12 @@ function ReviewsOrder({navigation, prices}){
        
        }
     }
-
+    console.log(prices);
+    console.log(commande);
     return(
         <View style = {{ width, height, flex: 1, backgroundColor: '#f1f1f5', }} >
-             <StatusBar backgroundColor="lightgray" />
-             <View style = {{ backgroundColor: '#fff', paddingHorizontal: 10 }} >
+            <StatusBar backgroundColor="lightgray" />
+            <View style = {{ backgroundColor: '#fff', paddingHorizontal: 10 }} >
                 <View style = {{ dipslay: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingVertical: 15,  }} >
                     <TouchableOpacity onPress = { () => navigation.navigate('Cloth') } >
                         <Feather name = 'arrow-left' size = {28} color = 'dodgerblue' />
@@ -60,7 +67,7 @@ function ReviewsOrder({navigation, prices}){
 
              
 
-             <View style = {{ height: height / 3.5, width, backgroundColor: '#ffff', marginTop: 20, bottom: 0, position: 'absolute' }} >
+            <View style = {{ height: height / 3.5, width, backgroundColor: '#ffff', marginTop: 20, bottom: 0, position: 'absolute' }} >
                 <View style = {{ paddingHorizontal: 10 }} >
                     <View style = {{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingTop: 20, borderBottomWidth: 1, borderColor: '#f1f1f5' }} >
                         <Text style = {{ fontWeight: 'bold', color: '#97989f', fontSize: 17 }} >Sub Total</Text>
@@ -86,8 +93,20 @@ function ReviewsOrder({navigation, prices}){
 
 function mapStateToProps(state){
     return {
-        prices: state.counter_3
+        prices: state.counter_3,
+        commande: state.commande,
+       
     }
 }
 
-export default connect(mapStateToProps, undefined)(ReviewsOrder)
+function mapDispatchToProps(dispatch){
+    return {
+       dispatch,
+       ...bindActionCreators({
+           orderActions
+       }, dispatch)
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReviewsOrder)

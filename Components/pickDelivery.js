@@ -1,10 +1,19 @@
-import React from 'react';
+import React,{ useEffect } from 'react';
 import { ScrollView, View, Text, TouchableOpacity, Dimensions, StatusBar, Image } from 'react-native';
 import { Feather, MaterialIcons } from '@expo/vector-icons';
 import PickDeliveryTopTabs from "../routes/pickDeliveryTopTabs";
 const { width, height } = Dimensions.get('screen');
+import { connect } from "react-redux";
 
-export default function PickDelivery({ navigation }) {
+function PickDelivery({ navigation, commande }) {
+   useEffect(() => {
+    commande.pickAddress.city = '';
+    commande.pickAddress.desc = '';
+    commande.pickAddress.quarters = '';
+    commande.deliveryAddress.city = '';
+    commande.deliveryAddress.desc = '';
+    commande.deliveryAddress.quarters = '';
+   }, [0])
     return (
         <View style = {{ flex: 1, width, backgroundColor: '#f1f1f5', height }} >
             <StatusBar backgroundColor="lightgray" />
@@ -22,3 +31,11 @@ export default function PickDelivery({ navigation }) {
         </View>
     )
 }
+
+function mapStateToProps(state){
+    return {
+        commande: state.commande
+    }
+}
+
+export default connect(mapStateToProps, undefined)(PickDelivery)

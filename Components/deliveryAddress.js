@@ -7,8 +7,17 @@ import { getCity, getDesc, getQuarters } from "../Action/deliveryAddress";
 
 const { width, height } = Dimensions.get('screen');
 
-function DeliveryAddress({navigation, data, getCity, getQuarters, getDesc }){
-console.log(data);
+function DeliveryAddress({navigation, data, commande,}){
+console.log(commande);
+const GetCity = (val) => {
+    commande.deliveryAddress.city = val
+}
+const getQuarters = (val) => {
+    commande.deliveryAddress.quarters = val
+}
+const getDesc = (val) => {
+    commande.deliveryAddress.desc = val
+}
     return(
         <TouchableWithoutFeedback  onPress = { Keyboard.dismiss }  >
             <View style = {{ width, height, flex: 1, backgroundColor: '#f1f1f5', }} >
@@ -25,7 +34,7 @@ console.log(data);
                         <Text style = {{ fontWeight: 'bold', paddingHorizontal: 10, marginTop: 20, marginBottom: 34 }} >Enter Address Details</Text>
                         <View style = {{ paddingHorizontal: 10 }} >
                             <View style = {{ borderBottomWidth: 1, borderColor: 'gray', paddingVertical: 6, height: 55 }} >
-                                <TextInput onChangeText = { (val) => getCity(val) } placeholder = 'City / Town' style = {{ height: '100%', }}  />
+                                <TextInput onChangeText = { (val) => GetCity(val) } placeholder = 'City / Town' style = {{ height: '100%', }}  />
                             </View>
                             <View style = {{ borderBottomWidth: 1, borderColor: 'gray', paddingVertical:6, height: 55 }} >
                                 <TextInput onChangeText = { (val) => getQuarters(val) } placeholder = 'Quarters' style = {{ height: '100%', }}  />
@@ -47,7 +56,8 @@ console.log(data);
 
 function mapStateToProps(state){
     return{
-        data: state.deliveryAddress
+        data: state.deliveryAddress,
+        commande: state.commande,
     }
 }
 

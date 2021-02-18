@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Flatlist, View, Text, TouchableOpacity, Dimensions, StatusBar, Image } from 'react-native';
 import { connect } from "react-redux";
 import { Feather, MaterialIcons } from '@expo/vector-icons'
@@ -9,7 +9,7 @@ import { getKids, removeKids } from "../Action/counterKids";
 const { width, height } = Dimensions.get('screen');
 
 function Kids({ kidsCoths, getKids, removeKids }){
-    
+  
     function loadCloths(){
         return kidsCoths.items.map((item, id)=>{
             return(
@@ -37,8 +37,6 @@ function Kids({ kidsCoths, getKids, removeKids }){
         })
     }
 
-    console.log(kidsCoths.addedItems);
-    console.log(kidsCoths.total);
         
         return(
             <View style = {{ flex: 1, width, backgroundColor: '#f1f1f5', height }} >

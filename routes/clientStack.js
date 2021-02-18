@@ -10,6 +10,7 @@ import PickDelivery from "../Components/pickDelivery";
 import PressingStack from './pressingStack'
 import Welcome from '../Components/welcome'
 import Search from "../Components/mapView"
+import paypal from "../Components/paypal";
 import GetPrestaData from "../Components/getPrestaData";
 
 const clientStack = createStackNavigator();
@@ -21,15 +22,13 @@ export default function InOutStack(){
                 headerShown:  false
             }}
         >
-        
-
-            <clientStack.Screen name = 'map'  component = {Search} />
+           <clientStack.Screen name = 'map'  component = {Search} />
+            <clientStack.Screen name = 'Home'  component = {HomeBottomTabs}  />
+            <clientStack.Screen name = 'Paypal'  component = {paypal} />
+            <clientStack.Screen name = 'Pressing'  component = {PressingStack} />
             <clientStack.Screen name = 'Cloth'  component = {Cloths} />
             <clientStack.Screen name = 'welcome'  component = {Welcome} />
             <clientStack.Screen name = 'login'  component = {Login} />
-            <clientStack.Screen name = 'Home'  component = {HomeBottomTabs}  />
-            
-            
             <clientStack.Screen name = 'ReviewOrders'  component = {ReviewOrder} />
             <clientStack.Screen name = 'PickDelivery'  component = {PickDelivery} />
             <clientStack.Screen name = 'Payment'  component = {Payment} />

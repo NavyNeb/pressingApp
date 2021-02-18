@@ -17,6 +17,7 @@ function Home( {navigation, prestaId, getServiceId} ){
           .then((response)=> response.json())
           .then((responseJson) => {
             setPrestaData(responseJson)
+            console.log(responseJson);
             setLoading(false)
           } )
           .catch((error) => (console.log(error.toString())))
@@ -63,8 +64,8 @@ function Home( {navigation, prestaId, getServiceId} ){
         <View style = {{ flex: 1, alignItems: 'center', backgroundColor: '#f1f1f5',  }} >
             <StatusBar backgroundColor="lightgray" />
             <View style = {{ height: height / 3.8, width, paddingHorizontal: 7, backgroundColor: '#ffff',marginBottom: 25, borderBottomLeftRadius: 15, borderBottomRightRadius: 15  }} >
-                <View style= {{ width, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingTop: 16 }} >
-                    <Text style = {{ display: 'flex', fontSize: 26, fontWeight: 'bold' }} >LOGO  </Text>
+                <View style= {{ width, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingTop: 16,  paddingLeft: 5 }} >
+                    <Image style = {{ width: 43, height: 56, }}  source = { require('../assets/images/PHARMO_PRESS.png') }  />
                     <View style = {{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingRight: 10 }} >
                         <View style = {{ height: 7, width: 7, backgroundColor: 'dodgerblue', borderRadius: 10, marginHorizontal: 3 }} ></View>
                         <View style = {{ height: 7, width: 7, backgroundColor: 'gray', borderRadius: 10, marginHorizontal: 3 }} ></View>
@@ -73,15 +74,15 @@ function Home( {navigation, prestaId, getServiceId} ){
                 </View>
                 <View style = {{ width, heigth: 130, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', marginTop: 30, }} >
                     <View style = {{ }} >
-                        <Text style = {{ display: 'flex', fontSize: 22, fontWeight: '900' }} >Order Title</Text>
-                        <TouchableOpacity onPress = { () => navigation.navigate('Offers') } style = {{ marginRight: 75 }} >
-                            <Text style = {{ display: 'flex', textAlign: 'center', paddingVertical: 5, color: 'dodgerblue' }} >
-                                View all offers <Text style = {{ fontSize: 30 }} >→</Text>
+                        <Text style = {{ display: 'flex', fontSize: 22, fontWeight: '900' }} >Bienvenue Sur</Text>
+                        <TouchableOpacity onPress = { () => navigation.navigate('Pressing') } style = {{ marginRight: 75 }} >
+                            <Text style = {{ display: 'flex', textAlign: 'center', paddingVertical: 5, color: 'dodgerblue',  fontSize: 18 }} >
+                                Pharmony<Text style = {{ color: '#4f95cb' }} > Pressing</Text>
                             </Text>
                         </TouchableOpacity>
                     </View>
                     <View>
-                        <Image style = {{height: 100, width: 100 }} source = {require('../icons/pressing/001-washing-machine.png')} />
+                        <Image style = {{height: 76, width: 75 }} source = {require('../icons/pressing/001-washing-machine.png')} />
                     </View>
                 </View>
             </View>

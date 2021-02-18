@@ -1,7 +1,7 @@
 import { ADD_TO_CART, REMOVE_FROM_CART } from "../Store/types";
 
 export const getKids = (id) => (dispatch) =>{
-    console.log('pressed');
+
     dispatch({
         type: ADD_TO_CART,
         payload: id

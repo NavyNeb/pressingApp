@@ -7,6 +7,7 @@ const { width, height } = Dimensions.get('screen');
 export default function OrderDetails({navigation}) {
     return (
         <View style={{ flex: 1, alignItems: 'center', backgroundColor: '#f1f1f5', width, height }} >
+            <ScrollView>
             <View style={{ width, height: height / 3.3, backgroundColor: '#fff', marginBottom: 4 }} >
                 <View style={{ dipslay: 'flex', flexDirection: 'row', paddingTop: 30, paddingHorizontal: 14, height: height / 14, backgroundColor: '#ffff' }} >
                     <TouchableOpacity onPress = { () => navigation.navigate('Home') } >
@@ -96,9 +97,10 @@ export default function OrderDetails({navigation}) {
                     <Text style={{ fontSize: 14, color: 'dodgerblue', fontWeight: 'bold' }} >TotalXAF</Text>
                 </View>
             </View>
-             <TouchableOpacity onPress = { () => navigation.navigate('OrderDetails') } style = {{ height: height / 12, width, backgroundColor: 'dodgerblue', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'column', justifyContent: 'center', }} >
+             <TouchableOpacity onPress = { () => navigation.navigate('Pressing') } style = {{ height: height / 12, width, backgroundColor: 'dodgerblue', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'column', justifyContent: 'center', }} >
                     <Text style = {{ fontSize: 18, color: '#fff' }} >Amount Payable (XAF) </Text>
             </TouchableOpacity>
+            </ScrollView>
         </View >
     )
 }

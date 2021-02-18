@@ -41,11 +41,11 @@ export default function Login( {navigation} ){
         <TouchableWithoutFeedback onPress = { Keyboard.dismiss } >
             <View style = {{flex: 1, paddingTop: 55, alignItems: 'center'}}>
                 <StatusBar backgroundColor="lightgray" />
-                <Text>This is login</Text>
                 <View style = {{ marginVertical: 15 }} >
-                    <Image style = {{height: 100, width: 100 }} source = {require('../icons/pressing/001-washing-machine.png')} />
+                    <Image style = {{height: 100, width: 100 }} source = {require('../assets/images/PHARMO_PRESS.png')} />
                 </View>
-                <Text style = {{ fontWeight: 'bold', fontSize: 28, letterSpacing: 2, color: '#8b9ca9', marginBottom: 15 }} >Washee</Text>
+                <Text style = {{ fontWeight: 'bold', fontSize: 28, letterSpacing: 2, color: 'dodgerblue', }} >Pharmony</Text>
+                <Text style = {{ color: '#4f95cb', fontSize: 20, marginBottom: 10 }} >Pressing</Text>
                 <Text style = {{ fontWeight: '800', fontSize: 24, color: '#4f95cb', marginBottom: 12 }} >Sign In Now</Text>
                 <View style = {{ backgroundColor: '#fafafa', width: width -10, height: height / 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', paddingVertical: 6, borderBottomWidth: 2, borderBottomColor:'#b2b0c0', marginVertical: 9 }} >
                     <Entypo name = 'credit-card' color = '#4f95cb' size = {21}/>
