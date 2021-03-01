@@ -1,6 +1,7 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { TouchableOpacity, BackHandler , ScrollView, View, Text, Image, Dimensions, StatusBar, TextInput, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { Feather, Entypo } from '@expo/vector-icons';
+import { WebView } from 'react-native-webview';
 import { bindActionCreators } from "redux";
 import { connect } from 'react-redux'
 import {orderAction} from "../Action/orderAction";
@@ -9,15 +10,18 @@ import { reqOrder } from "../Action/redOrderAc";
 const { width, height } = Dimensions.get('screen');
 
 function Payment({navigation, commandeAction, commande, ligne, reqOrder, total }){
+
+  const [token, setToken] = useState('');
+  const [id, setId] = useState('');
+  const [load, setLoad] = useState(true)
     const navigate = () => {
         reqOrder(commande)
         navigation.navigate('OrderDetails')
     }
-    var total = commande.payment.total
+    console.log("commande", commande);
+    var total = commande.commande.payment.total
     var URL = '';
     const makePayment = ()=> {
-      
-                        
         fetch('https://api.sandbox.paypal.com/v1/oauth2/token?grant_type=client_credentials', {
             method: 'POST',
             headers: {
@@ -185,7 +189,7 @@ function Payment({navigation, commandeAction, commande, ligne, reqOrder, total }
                  
               </ScrollView>
               <TouchableOpacity onPress = { () => navigate()  } style = {{ height: height / 12, width, backgroundColor: 'dodgerblue', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row', borderRadius: 20 }} >
-                  <Text style = {{ fontSize: 18, color: '#fff', paddingHorizontal: 5 }} >Amount Payable (XAF) </Text>
+                  <Text style = {{ fontSize: 18, color: '#fff', paddingHorizontal: 5 }} >Amount Payable (XAF) {commande.commande.payment.total} </Text>
                   <Text style = {{ fontSize: 28, color: '#fff' }} >Next <Entypo name = 'chevron-thin-right' color = '#fff' size = {24} /> </Text>
               </TouchableOpacity>
           </View>

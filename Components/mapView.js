@@ -19,8 +19,7 @@ function Search({navigation, idPresta, getPrestaId}){
     const [errorMsg, setErrorMsg] = useState(null);
     const [data, setData] = useState([])
     const [active, setActive] = useState(0)
-    const [latitude, setLatitude] = useState('')
-    const [longitude, setLongitude] = useState('')
+    const [position, setPosition] = useState([])
     const [search, setSearch] = useState('')
     const getData = () => {
             if (search === '') {
@@ -34,9 +33,7 @@ function Search({navigation, idPresta, getPrestaId}){
             .catch((error) => (console.log(error.toString())))
             
            
-        retrieveData()
-        console.log(longitude);
-        console.log(latitude);
+      
             } else {
               fetch('http://pressingliveapp.herokuapp.com/search?search=' + search)
             .then(Response => Response.json())
@@ -48,21 +45,21 @@ function Search({navigation, idPresta, getPrestaId}){
             .catch((error) => (console.log(error.toString())))
             
            
-        retrieveData()
-        console.log(longitude);
-        console.log(latitude);
+       
+        // console.log(longitude);
+        // console.log(latitude);
             }
         setActive(1)
     }
 
-    const retrieveData = () => {
-            data.forEach(element => {
-                return (
-                    setLongitude(element.adresse.longitude_presta),
-                    setLatitude(element.adresse.latitude_presta)
-                )
-            })
-    }
+    // const retrieveData = () => {
+    //         data.forEach(element => {
+    //             return (
+    //                 setLongitude(element.adresse.longitude_presta),
+    //                 setLatitude(element.adresse.latitude_presta)
+    //             )
+    //         })
+    // }
 
     useEffect(() => {
       (async () => {
@@ -74,6 +71,12 @@ function Search({navigation, idPresta, getPrestaId}){
   
         let location = await Location.getCurrentPositionAsync({});
         setLocation(location);
+        fetch('http://192.168.100.207:8000/search_dist/?longitude=' + location.coords.longitude.toString() +'&latitude='+ location.coords.latitude.toString() + '&query=Douala' )
+        .then(response => response.json())
+        .then((jsonResp) => {
+          console.log(jsonResp);
+          
+        })
       })();
     }, []);
 
@@ -122,12 +125,12 @@ function Search({navigation, idPresta, getPrestaId}){
                )
              }
            </View>
-           <TouchableOpacity>
+           {/* <TouchableOpacity>
              <Text  style = {{ fontSize: 18, color: '#000', letterSpacing: 1 }} >
                 Search Pressing
              </Text>
            </TouchableOpacity>
-            {/* <MapView style = {{ position: 'absolute', width, height }}>
+            <MapView style = {{ position: 'absolute', width, height }}>
             <Marker 
                       coordinate = {{ 
                         latitude: 4.0980875,

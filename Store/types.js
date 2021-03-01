@@ -18,3 +18,7 @@ export const ADD_ORDER_ITEM = 'ADD_ORDER_ITEM';
 export const SUBMIT_COMMANDE = 'SUBMIT_COMMANDE';
 export const MODIFY_TARIF = 'MODIFY_TARIF';
 export const SAVE_MODIF = 'SAVE_MODIF'
+export const INCREASE_MEN = 'INCREASE_MEN'
+export const DECREASE_MEN = 'DECREASE_MEN'
+export const ADD_MEN = 'ADD_MEN'
+export const REMOVE_MEN = 'REMOVE_MEN'

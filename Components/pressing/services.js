@@ -3,6 +3,8 @@ import { View, Text, Dimensions, TouchableOpacity, Image, Flatlist, Animated, Ea
 const { width, height } = Dimensions.get('screen')
 import { BarIndicator,PulseIndicator } from "react-native-indicators";
 import { Feather } from "@expo/vector-icons";
+import { ScrollView } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
 
 function Services() {
     const anim = useState(new Animated.Value(-500))[0]
@@ -11,52 +13,89 @@ function Services() {
      const [loading, setLoading] = useState(true);
      const [prestaData, setPrestaData] = useState();
      const [hidden, setHidden] = useState(true)
+     const [services, setServices] = useState([])
      const [id, setId] = useState(0)
      const [data, setData] = useState()
      const [disp, setDisp] = useState(true)
      const [nom_service, setNom_service] = useState('')
      const [caracteristique, setCaraterisque] = useState('')
      useEffect(() => {
-          fetch('http://pressingliveapp.herokuapp.com/viewset/prestataire/' + 1)
+          fetch('http://192.168.100.207:8000/viewset/prestataire/' + 3)
           .then((response)=> response.json())
           .then((responseJson) => {
-            setPrestaData(responseJson.service)
+              console.log(responseJson);
+            responseJson.service.map(item => {
+                console.log('item', item);
+              if ( services.length > 0 ) {
+                  services.map((servItem)=>{
+                      if ( servItem.id != item.id ) {
+                          services.push({name: item.nom_service, id: item.id})
+                      }
+                  })
+              } else {
+                setServices(prevState => {
+                  
+                    console.log("prevState",prevState); 
+                    
+                    return[
+                        ...prevState, 
+                        {name: item.nom_service, id: item.id},
+                    ]
+                    
+                })
+              }
+             })
+              
             setLoading(false)
-            console.log(prestaData);
-          } )
+            console.log(services);
+          })
           .catch((error) => (console.log(error.toString())))
     }, [0]);
 
+    const  reloadData = () => {
+        fetch('http://192.168.100.207:8000/viewset/prestataire/' + 3)
+        .then((response)=> response.json())
+        .then((responseJson) => {
+          setPrestaData(responseJson.service)
+          setLoading(false)
+          console.log(prestaData);
+        })
+        .catch((error) => (console.log(error.toString())))
+    }
     const ajouterService = () => {
         return (
-            fetch('http://pressingliveapp.herokuapp.com/viewset/prestataire/1/',{
-                method: 'PUT',
+            fetch('http://192.168.100.207:8000/viewset/prestataire/3/',{
+                method: 'PATCH',
                 headers: {
                     'Accept': 'application/json',
-                    'content-Type': 'application/json'
+                    'Content-Type': 'application/json'
                 },
-                boby: JSON.stringify({
-                    nom_service: nom_service,
-                    caracteristique: caracteristique
+                body: JSON.stringify({
+                      service: {
+                        nom_service: nom_service,
+                        caracteristique: caracteristique   
+                      }
                 })
             })
-            .then(()=> console.log(nom_service))
-            .catch((err) => console.log(err.toString()))
+            .then(()=> {
+                console.log(nom_service);
+                console.log(caracteristique);
+                fetch('http://192.168.100.207:8000/viewset/prestataire/3/')
+                .then((response)=> response.json())
+                .then((responseJson) => console.log('Yeah', responseJson))
+            })
+            .catch((err) => alert(err.toString()))
       
-        )
-         }
+        )}
  
     function loadServ(){
         setHidden(false)
-        console.log(prestaData);
-        let items = prestaData.find(el => el.id == id)
         translate()
-        setData(items)
-        console.log('retDat',data);
         setDisp(false)
     } 
 
     function close() {
+        reloadData()
         setHidden(true)
         translate()
     }
@@ -94,9 +133,7 @@ function Services() {
      const getServices = () => {
         
         if (loading) {
-            return  <View style = {{ alignItems: 'center', width }} >
-                <BarIndicator  animating interaction />
-            </View>
+            return 
     
         } else {
             
@@ -128,7 +165,24 @@ function Services() {
            <View style = {{ backgroundColor: '#fff', flex: 1 , marginTop: 10, width , alignSelf: 'center', borderRadius: 35, elevation: 2, alignItems: 'center', paddingTop: 20 }} >
                <Text style = {{ color: '#9a81d2', fontSize: 17, marginBottom: 10 }} > Your Services </Text>
                 <View style = {{ height: height / 2, width: width - 20, backgroundColor: '#f1f1f5', borderRadius: 15, justifyContent : 'space-between', alignItems: 'center', flexDirection: 'row', paddingRight: 10 }} >
-                { getServices() }
+                { loading ? ( <View style = {{ alignItems: 'center', width }} >
+                <BarIndicator  animating interaction />
+            </View>) :  (<FlatList
+                        data = {services}
+                        numColumns = {2}
+                        contentContainerStyle = {{ paddingHorizontal: 20 }}
+                        keyExtractor = { services => services.id.toString() }
+                        renderItem = {({item}) => {
+                            return (
+                                <TouchableOpacity  style = {{ alignItems: 'center', justifyContent: 'center', height: 120, width: width / 3, backgroundColor: '#fff', borderRadius: 9, paddingTop: 8, margin: 15 }} > 
+                                    <Image style = {{height: 55, width: 55 }} source = {require('../../icons/pressing/001-washing-machine.png')} />
+                                    <Text style = {{ display: 'flex', fontSize: 20, fontWeight: 'bold', marginTop: 20 }} >{item.name}</Text>
+                                    <Text style = {{ display: 'flex', color: '#97989f', fontSize: 12 }} >Min 12 hours</Text>
+                                </TouchableOpacity>
+                            )
+                        }}
+                   />) 
+                   }
                 </View>
                 <TouchableOpacity onPress = { () => loadServ() } style = {{ width: width-30, backgroundColor: '#9a81d2', height:65, marginTop: 50, borderRadius: 24, justifyContent: 'center', alignItems: 'center' }} >
                     <Text style = {{ color: '#fff', fontSize: 24, marginBottom: 10 }} > <Text style = {{  color: 'white', textAlign: 'center', width: 50 , fontSize: 34, borderRadius: 35 , marginBottom: 10 }} >+</Text>  Add Service </Text>

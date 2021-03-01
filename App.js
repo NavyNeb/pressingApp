@@ -8,6 +8,7 @@ import  AppLoading  from "expo-app-loading";
 import * as Font from "expo-font";
 import Assigned from "./Components/pressing/assigned";
 import Service from "./Components/pressing/services";
+import Dash from "./Components/pressing/adminLogin";
 import { StyleSheet, Text, View } from 'react-native';
 
 export default function App() {
@@ -19,10 +20,10 @@ export default function App() {
 )
     if (fontsLoaded) {
      return (
-      // <Service />
+      // <Dash />
       <NavigationContainer>
         <Provider store = {Store} >
-          <BottonTabs />
+        <BottonTabs />
         </Provider>
       </NavigationContainer>
      )

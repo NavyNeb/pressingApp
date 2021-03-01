@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { View,  Text, TouchableOpacity, Image, StatusBar, Dimensions, TextInput, Keyboard, TouchableWithoutFeedback } from 'react-native'
 import { Entypo } from '@expo/vector-icons'
 import signUp from './signUp';
+import { CheckBox } from "react-native-elements";
 const {width, height} = Dimensions.get('screen')
 
 
@@ -11,6 +12,7 @@ export default function Login( {navigation} ){
     const [username,setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
+    const [admin, setAdmin] = useState(false)
 
     function signUp () {
         fetch('http://pressingliveapp.herokuapp.com/login',{
@@ -28,11 +30,40 @@ export default function Login( {navigation} ){
             
             if (resp.token!=undefined) {
                 navigation.navigate('map')
+                
+                console.log(resp);
             }
             else{
-                setError('username or password incorrect')
+                alert('username or password incorrect')
             }
           })
+        
+    }
+
+    function adminSignUp () {
+        fetch('http://pressingliveapp.herokuapp.com/login',{
+            method:'POST',
+            headers:{
+                'content-type': 'application/json',
+            },
+            body: JSON.stringify({
+                'username':username,
+                'password':password,
+            })
+    
+        }).then(res => res.json())
+          .then(resp => {
+            
+            if (resp.token!=undefined) {
+                navigation.navigate('Pressing')
+                
+                console.log(resp);
+            }
+            else{
+                alert('username or password incorrect')
+            }
+          })
+        
         
     }
 
@@ -61,11 +92,19 @@ export default function Login( {navigation} ){
                         <Text style ={{ color: '#4f95cb', fontWeight: 'bold' }} ></Text>
                     </TouchableOpacity>
                 </View>
-                <TouchableOpacity onPress={signUp}  style = {{ width: width -10, height: height / 15, backgroundColor: '#4f95cb', paddingVertical: 10, marginVertical: 10, borderRadius: 8 }} >  
+                <TouchableOpacity onPress={ admin ? adminSignUp : signUp }  style = {{ width: width -10, height: height / 15, backgroundColor: '#4f95cb', paddingVertical: 10, marginVertical: 10, borderRadius: 8 }} >  
                     <Text style = {{textAlign: 'center', color: '#ffff', fontSize: 18, fontWeight: '800', textAlign: 'center'}} >Sign In</Text>
                 </TouchableOpacity>
-                <Text style={{color: 'red', fontSize: 15}} > {error} </Text>
+                <View style = {{ display:'flex', flexDirection:'row', alignItems: 'center', justifyContent: 'space-around', width: '100%', backgroundColor: 'indigo' }} >
+                <CheckBox
+                    center
+                    title='Login as admin ?'
+                    checkedColor='red'
+                    checked={admin}
+                    onPress={ () => setAdmin(!admin) }
+                />
                 <Text style = {{ fontWeight: 'bold', color: 'black', marginTop: 12, }} > Not yet Registered ? </Text>
+                </View>
                 <TouchableOpacity style = {{ width: width -10, height: height / 15, paddingVertical: 10, marginVertical: 25, borderWidth: 2, borderColor: '#4f95cb' }} onPress = { () => navigation.navigate('Register') } >
                     <Text style = {{textAlign: 'center', color: '#4f95cb', fontWeight: '900', fontSize: 16 }} >Register Now</Text>
                 </TouchableOpacity>

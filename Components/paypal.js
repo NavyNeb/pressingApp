@@ -7,13 +7,11 @@ import {
     TouchableOpacity,
     FlatList
 } from 'react-native'
-import { WebView } from 'react-native-webview';
+
 import { useEffect } from 'react';
 
 export default function Paypal({navigation}){
-    const [token, setToken] = useState('');
-    const [id, setId] = useState('');
-    const [load, setLoad] = useState(true)
+
   
     var URL = '';
     const makePayment = ()=> {
@@ -151,7 +149,7 @@ export default function Paypal({navigation}){
       
 
     return(
-
+      <Text>hello</Text>
     )
 } 
 

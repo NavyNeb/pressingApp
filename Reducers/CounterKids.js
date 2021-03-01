@@ -1,18 +1,5 @@
 import { ADD_TO_CART, REMOVE_FROM_CART, MODIFY_TARIF, SAVE_MODIF } from "../Store/types";
 const InitialState = {
-    items: [
-        {name: 'Sweaters', id: 0,  price: 450, category: 'Kids', quantity: 0, totalItem: 0, Image: require('../assets/clothes/Kids/sweaters_Kids.png') },
-        {name: 'Sweaters', id: 1, price: 550, category: 'Kids', quantity: 0, totalItem: 0, Image: require('../assets/clothes/Kids/4250836_ALT_kids.png') },
-        {name: 'Sweaters', id: 2, price: 650, category: 'Kids', quantity: 0, totalItem: 0, Image: require('../assets/clothes/Kids/kids_ALT.png') },
-        {name: 'Sweaters', id: 3, price: 750, category: 'Kids', quantity: 0, totalItem: 0, Image: require('../assets/clothes/Kids/kids_Black.png') },
-        {name: 'Sweaters', id: 4, price: 850, category: 'Kids', quantity: 0, totalItem: 0, Image: require('../assets/clothes/Kids/kids_Black_Plaid.png') },
-        {name: 'Sweaters', id: 5, price: 950, category: 'Kids', quantity: 0, totalItem: 0, Image: require('../assets/clothes/Kids/kids_Cherry_Berry_Red.png') },
-        {name: 'Sweaters', id: 6, price: 1050, category: 'Kids', quantity: 0, totalItem: 0, Image: require('../assets/clothes/Kids/kids_Girl_Ballerina_Pink.png') },
-        {name: 'Sweaters', id: 7, price: 1150, category: 'Kids', quantity: 0, totalItem: 0, Image: require('../assets/clothes/Kids/kids_Girl_Fairisle_Gray.png') },
-        {name: 'Sweaters', id: 8, price: 1250, category: 'Kids', quantity: 0, totalItem: 0, Image: require('../assets/clothes/Kids/kids_Girl_Pink_Dye.png') },
-        {name: 'Sweaters', id: 9, price: 1350, category: 'Kids', quantity: 0, totalItem: 0, Image: require('../assets/clothes/Kids/pullover_White.png') },
-
-    ], 
     addedItems: [],
     total: 0
 
