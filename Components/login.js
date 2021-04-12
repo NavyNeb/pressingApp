@@ -1,20 +1,37 @@
-import React, { useState } from 'react'
-import { View,  Text, TouchableOpacity, Image, StatusBar, Dimensions, TextInput, Keyboard, TouchableWithoutFeedback } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { View,  Text, TouchableOpacity, Image, Dimensions, TextInput, Keyboard, TouchableWithoutFeedback } from 'react-native'
 import { Entypo } from '@expo/vector-icons'
 import signUp from './signUp';
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { getCLient } from "../Action/getClient";
 import { CheckBox } from "react-native-elements";
+import { SkypeIndicator } from "react-native-indicators";
+
 const {width, height} = Dimensions.get('screen')
 
 
 
-export default function Login( {navigation} ){
+function Login( {navigation, getCLient} ){
 
     const [username,setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
     const [admin, setAdmin] = useState(false)
+    const [users, setUsers] = useState([])
+    const [loading, setLoading] = useState(false)
+
+    useEffect(() => {
+        fetch('http://pressingliveapp.herokuapp.com/viewset/register/')
+        .then((response) => response.json())
+        .then(( userList ) => {
+            setUsers(userList)
+        })
+        .catch((err) => alert(err.toString()))
+     }, [0])
 
     function signUp () {
+        setLoading(true)
         fetch('http://pressingliveapp.herokuapp.com/login',{
             method:'POST',
             headers:{
@@ -29,18 +46,22 @@ export default function Login( {navigation} ){
           .then(resp => {
             
             if (resp.token!=undefined) {
+                const client = users.find( item => item.user.id == resp.user.id )
+                setLoading(false)
+                getCLient(client.id)
                 navigation.navigate('map')
-                
                 console.log(resp);
             }
             else{
+                setLoading(false)
                 alert('username or password incorrect')
             }
           })
         
     }
 
-    function adminSignUp () {
+    function adminSignUp() {
+        setLoading(true)
         fetch('http://pressingliveapp.herokuapp.com/login',{
             method:'POST',
             headers:{
@@ -55,11 +76,12 @@ export default function Login( {navigation} ){
           .then(resp => {
             
             if (resp.token!=undefined) {
+                setLoading(false)
                 navigation.navigate('Pressing')
-                
                 console.log(resp);
             }
             else{
+                setLoading(false)
                 alert('username or password incorrect')
             }
           })
@@ -70,8 +92,8 @@ export default function Login( {navigation} ){
     return(
         
         <TouchableWithoutFeedback onPress = { Keyboard.dismiss } >
-            <View style = {{flex: 1, paddingTop: 55, alignItems: 'center'}}>
-                <StatusBar backgroundColor="lightgray" />
+            {
+                loading ? ( <SkypeIndicator style = {{ backgroundColor: '#f1f1f5', }} color = 'dodgerblue' size = { 60 } animating interaction /> ) : ( <View style = {{flex: 1, paddingTop: 55, alignItems: 'center'}}>
                 <View style = {{ marginVertical: 15 }} >
                     <Image style = {{height: 100, width: 100 }} source = {require('../assets/images/PHARMO_PRESS.png')} />
                 </View>
@@ -95,7 +117,7 @@ export default function Login( {navigation} ){
                 <TouchableOpacity onPress={ admin ? adminSignUp : signUp }  style = {{ width: width -10, height: height / 15, backgroundColor: '#4f95cb', paddingVertical: 10, marginVertical: 10, borderRadius: 8 }} >  
                     <Text style = {{textAlign: 'center', color: '#ffff', fontSize: 18, fontWeight: '800', textAlign: 'center'}} >Sign In</Text>
                 </TouchableOpacity>
-                <View style = {{ display:'flex', flexDirection:'row', alignItems: 'center', justifyContent: 'space-around', width: '100%', backgroundColor: 'indigo' }} >
+                <View style = {{ display:'flex', flexDirection:'column', alignItems: 'center', justifyContent: 'space-around', width: '100%', backgroundColor: 'transparent' }} >
                 <CheckBox
                     center
                     title='Login as admin ?'
@@ -108,8 +130,21 @@ export default function Login( {navigation} ){
                 <TouchableOpacity style = {{ width: width -10, height: height / 15, paddingVertical: 10, marginVertical: 25, borderWidth: 2, borderColor: '#4f95cb' }} onPress = { () => navigation.navigate('Register') } >
                     <Text style = {{textAlign: 'center', color: '#4f95cb', fontWeight: '900', fontSize: 16 }} >Register Now</Text>
                 </TouchableOpacity>
-            </View>
+            </View> )
+            }
         </TouchableWithoutFeedback>
         
     );
 }
+
+
+function mapDispatchToProps(dispatch){
+    return{
+        dispatch,
+        ...bindActionCreators({
+            getCLient
+        }, dispatch)
+    }
+}
+
+export default connect(undefined, mapDispatchToProps)(Login)

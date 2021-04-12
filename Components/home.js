@@ -8,7 +8,7 @@ import { getServiceId } from "../Action/getServiceId";
 import { WaveIndicator } from "react-native-indicators";
 
 const { width, height } = Dimensions.get('screen')
-function Home( {navigation, prestaId, getServiceId} ){
+function Home( {navigation, prestaId, getServiceId, commande} ){
     const [prestaData, setPrestaData] = useState([])
     const [loading, setLoading] = useState(true)
     const [serviceId, setSerciveId] = useState(0)
@@ -21,11 +21,12 @@ function Home( {navigation, prestaId, getServiceId} ){
             setLoading(false)
           } )
           .catch((error) => (console.log(error.toString())))
+          commande.prestataire = prestaId.value
     }, [0]);
 
     console.log(prestaId.value);
     
-
+    
     
     const getServices = () => {
   
@@ -91,51 +92,12 @@ function Home( {navigation, prestaId, getServiceId} ){
                
             </View>
             <View style = {{ height: height / 4.1,  }} >
-            <ScrollView  horizontal showsHorizontalScrollIndicator = {false} contentContainerStyle={{ alignItems: 'center' }} style = {{ width, paddingHorizontal: 10, height: 190 }} >
-                {getServices()}
-            </ScrollView>
-            </View>
-            <View style = {{ width, paddingHorizontal: 10, marginVertical: 8 }} >
-                <View style = {{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }} >
-                    <Text style = {{ display: 'flex', color: '#97989f' }} >Your Active Orders (counter)</Text>
-                    <TouchableOpacity><Text style= {{ color: 'dodgerblue', fontSize: 18 }} >Past Orders</Text></TouchableOpacity>
-                </View>
-                <View>
-                <ScrollView>
-                    <TouchableOpacity activeOpacity = {0.2} style = {{ height: 75, backgroundColor: '#fff', marginVertical: 5, paddingHorizontal: 10 , borderRadius: 6, marginBottom: 5, marginTop: 7, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start'  }} >
-                        <View style = {{ height: 65, width: 65, alignItems: 'center', justifyContent: 'center', marginVertical: 5, marginRight: 10, borderRadius: 35, borderWidth: 2, borderTopColor: 'dodgerblue', borderColor: '#e1e2ed' }}> 
-                            <Image style = {{height: 25, width: 25, }} source = {require('../icons/pressing/order_history.png')} />
-                        </View>
-                        <View style = {{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'space-around',  paddingHorizontal: 6 }} >
-                            <View style = {{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '74%',  }} >
-                                <Text style = {{ display: 'flex', fontSize: 16, fontWeight: 'bold' }} >Order No: 22029275</Text>
-                                <Text  style = {{ display: 'flex', }}>8655XAF</Text>
-                            </View>
-                            <View style = {{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '74%' , }} >
-                                <Text style = {{ display: 'flex', color: 'dodgerblue', fontSize: 12 }} >Order Confirmed</Text>
-                                <Text style = {{ display: 'flex', color: '#97989f', fontSize: 12 }} >23 June 2020</Text>
-                            </View>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity style = {{ height: 75, backgroundColor: '#fff', marginVertical: 5, paddingHorizontal: 10, borderRadius: 6, marginBottom: 5, marginTop: 7, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start'  }} >
-                        <View style = {{ height: 65, width: 65, alignItems: 'center', justifyContent: 'center', marginVertical: 5, marginRight: 10, borderRadius: 35, borderWidth: 2, borderTopColor: 'dodgerblue', borderColor: '#e1e2ed' }}> 
-                            <Image style = {{height: 25, width: 25, }} source = {require('../icons/pressing/order_history.png')} />
-                        </View>
-                        <View style = {{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'space-around', paddingHorizontal: 6 }} >
-                            <View style = {{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '74%',  }} >
-                                <Text style = {{ display: 'flex', fontSize: 16, fontWeight: 'bold' }} >Order No: 22029275</Text>
-                                <Text>8655XAF</Text>
-                            </View>
-                            <View style = {{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '74%' , }} >
-                                <Text style = {{ display: 'flex', color: 'dodgerblue', fontSize: 12 }} >Order Confirmed</Text>
-                                <Text style = {{ display: 'flex', color: '#97989f', fontSize: 12 }} >23 June 2020</Text>
-                            </View>
-                        </View>
-                    </TouchableOpacity>
-                   
+                <ScrollView  horizontal showsHorizontalScrollIndicator = {false} contentContainerStyle={{ alignItems: 'center' }} style = {{ width, paddingHorizontal: 10, height: 190 }} >
+                    {getServices()}
                 </ScrollView>
             </View>
-            </View>
+            
+            
         </View>
     )
 }
@@ -143,7 +105,8 @@ function Home( {navigation, prestaId, getServiceId} ){
 function mapStateToProps(state){
     return{
         prestaId: state.getId,
-        prestataire: state.reducerPresta
+        prestataire: state.reducerPresta,
+        commande: state.commande
     }
 }
 

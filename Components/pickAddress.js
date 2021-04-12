@@ -4,6 +4,7 @@ import { Feather, Entypo } from '@expo/vector-icons';
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { getCity,getQuarters, getDesc } from "../Action/address";
+import {Picker} from '@react-native-picker/picker';
 import Commande from '../Reducers/commande';
 
 const { width, height } = Dimensions.get('screen');

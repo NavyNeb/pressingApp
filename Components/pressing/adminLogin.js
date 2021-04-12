@@ -5,9 +5,10 @@ const { width, height } = Dimensions.get('screen')
 
 function DashboardAdmin({navigation}){
     const [ options, setOptions ] = useState([
-        { title: 'Commands', desc: 'Manage all commands affected to you', id: 1, navigation: 'ordertab' },
+        { title: 'Commands', desc: 'Manage all commands affected to you', id: 1, navigation: 'orderadmin' },
         { title: 'Sevices', desc: 'Manage your services at ease', id: 2, navigation: 'services' },
         { title: 'Tarification', desc: 'Manage yout tarification', id: 3, navigation: 'tarif' },
+        { title: 'Articles', desc: 'Manage your articles', id: 3, navigation: 'article' },
     ])
     return (
         <View style = {{ flex: 1, backgroundColor: '#f1f1f5', paddingTop: 30 }} >

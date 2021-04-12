@@ -1,79 +1,55 @@
-import { ADD_TO_CART, REMOVE_FROM_CART, MODIFY_TARIF, SAVE_MODIF } from "../Store/types";
-const InitialState = {
-    addedItems: [],
-    total: 0
-
-} 
-
-export default function Counterkids(state = InitialState, action){
-    if(action.type === ADD_TO_CART){
-        let addedItem = state.items.find(item=> item.id === action.payload)
-        //check if the action id exists in the addedItems
-       let existed_item = state.addedItems.find(item => action.payload === item.id)
-       if(existed_item)
-       {
-          addedItem.quantity += 1
-          addedItem.totalItem = addedItem.quantity * addedItem.price;
-        
-           return{
-              ...state,
-               total: state.total + addedItem.price
+import { INCREASE_KIDS, DECREASE_KIDS, REMOVE_KIDS, ADD_KIDS } from "../Store/types";
+const InitialState = {articles:[],
+    Total: 0
+}
+export default function CounterKids(state = InitialState, action){
+    let nextState;
+    switch (action.type) {
+        case INCREASE_KIDS:
+            let itemToIncrement = state.articles.find( item => item.id === action.payload )
+            if (itemToIncrement) {
+                itemToIncrement.quantity += 1
+                itemToIncrement.totalItem = itemToIncrement.quantity * itemToIncrement.price
+                return {
+                    ...state,
+                    Total:  state.Total + itemToIncrement.price,
                 }
-      }
-       else{
-          addedItem.quantity = 1;
-          addedItem.totalItem = addedItem.quantity * addedItem.price;
-          //calculating the total
-          let newTotal = state.total + addedItem.price
-          
-          return{
-              ...state,
-              addedItems: [...state.addedItems, addedItem],
-              total : newTotal
-          }
-          
-      }
-  }
-  else if(action.type === REMOVE_FROM_CART){
-    let addedItem = state.items.find(item=> item.id === action.payload)
-    //check if the action id exists in the addedItems
-    let existed_item = state.addedItems.find(item=> action.payload === item.id)
-    if (existed_item) {
-       if ( addedItem.quantity > 0 ) {
-           addedItem.quantity -= 1;
-           addedItem.totalItem -= addedItem.price;
-           return {
-               ...state,
-               total: state.total - addedItem.price
+            }
+            return state
+        case REMOVE_KIDS:
+           let itemToBeRemoved = state.articles.find( item => item.id === action.payload )
+           if (itemToBeRemoved) {
+               itemToBeRemoved.quantity = 0
+               itemToBeRemoved.totalItem = 0
+               nextState = state.articles.filter( item => item.id !== itemToBeRemoved.id )
+               return {
+                   ...state,
+                   articles: nextState,
+               }
            }
-           
-       } else if (addedItem.quantity === 0 ) {
-           
-           return {
-               addedItems: [ state.addedItems.filter(item => item.id != action.payload) ],
-               ...state
-           }
-       }
-    } else {
-        return state
-    }
-  }
+           return state 
+        case DECREASE_KIDS:
+            let itemToDecrement = state.articles.find( item => item.id === action.payload )
+            if (itemToDecrement) {
+                itemToDecrement.quantity -= 1
+                itemToDecrement.totalItem -= itemToDecrement.price
+                return {
+                    ...state,
+                    Total: state.Total - itemToDecrement.price,
+                }
+            }
+            return state
+        case ADD_KIDS:
+            let item = { name: action.payload.name, id: action.payload.id, quantity: 1, totalItem: action.payload.price, price:  action.payload.price, category: action.payload.category, tarif: action.payload.tarif  }
+            nextState = {
+                ...state,
+                articles:  [...state.articles, item],
+            }
+            return nextState;
+        default:
+            return state;
+    }       
 
-  else if( action.type === MODIFY_TARIF ) {
-      state.items.map((item, id) => {
-          if (item.id === action.id ) {
-              item.name = action.tarif
-              return {
-                ...state
-              }
-          } else {
-              return state
-          }
-      })
-  } else {
-      return state
-  }
-
-  }
     
+}
 

@@ -11,7 +11,7 @@ function Orders({ navigation, Order }) {
     }
     return (
         <View style = {{ flex: 1, marginTop: 8, }} >
-           <TouchableOpacity activeOpacity = {0.3} >
+           <TouchableOpacity onPress = { () => navigation.navigate('orderdetailsadmin') } activeOpacity = {0.3} >
             <View style ={{ backgroundColor: '#fff', width: width - 10, paddingHorizontal: 15, alignSelf:'center', elevation: 3, borderRadius: 10 }} >
                     <View style = {{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6, marginTop: 14 }} >
                         <Text style = {{ fontSize: 18, fontWeight: 'bold', color: '#000' }} > Sam Smith </Text>

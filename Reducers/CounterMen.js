@@ -1,47 +1,50 @@
 import { INCREASE_MEN, DECREASE_MEN, REMOVE_MEN, ADD_MEN } from "../Store/types";
-const InitialState = {articles:[]}
+const InitialState = {articles:[],
+    Total: 0
+}
 export default function CounterMen(state = InitialState, action){
     let nextState;
     switch (action.type) {
         case INCREASE_MEN:
-        //     nextState = {
-        //         ...state,
-        //         articles: state.articles.map((value, i) => {
-        //             if ( action.payload === i ) {
-        //              console.log(value);
-        //             }
-        //             return nextState;
-        //         } )
-        //     }
-        //     console.log("state",state);
-        //    return nextState;
-        let itemExists = false;
-        nextState = state.articles.map(item => {
-        const newItem = { ...item };
-        if (newItem.item.id === payload.id) {
-            itemExists = true;
-            newItem.item.quantity = item.quantity + 1;
-        }
-        return newItem;
-        });
-
-        if (!itemExists) newState.push(payload);
-
-        return nextState;
-        
-        case REMOVE_MEN:
-            nextState = {
-                ...state,
-                articles: state.articles.filter(i => i.id != action.payload)
+            let itemToIncrement = state.articles.find( item => item.id === action.payload )
+            if (itemToIncrement) {
+                itemToIncrement.quantity += 1
+                itemToIncrement.totalItem = itemToIncrement.quantity * itemToIncrement.price
+                return {
+                    ...state,
+                    Total: state.Total + itemToIncrement.price,
+                }
             }
-           return nextState;
+            return state
+        case REMOVE_MEN:
+           let itemToBeRemoved = state.articles.find( item => item.id === action.payload )
+           if (itemToBeRemoved) {
+                itemToBeRemoved.quantity = 0
+                itemToBeRemoved.totalItem = 0
+               nextState = state.articles.filter( item => item.id !== itemToBeRemoved.id )
+               return {
+                   ...state,
+                   articles: nextState,
+               }
+           }
+           return state 
         case DECREASE_MEN:
-           
+            let itemToDecrement = state.articles.find( item => item.id === action.payload )
+            if (itemToDecrement) {
+                itemToDecrement.quantity -= 1 
+                itemToDecrement.totalItem -= itemToDecrement.price
+                return {                   
+                    ...state,
+                    Total: state.Total - itemToDecrement.price,
+                }
+                
+            }
+            return state
         case ADD_MEN:
-            let item = { name: action.payload.name, id: action.payload.id, quantity: action.payload.quantity, totalItem: action.payload.totalItem  }
+            let item = { name: action.payload.name, id: action.payload.id, quantity: 1, totalItem: action.payload.price, price:  action.payload.price, category: action.payload.category, tarif: action.payload.tarif  }
             nextState = {
                 ...state,
-                articles:  [...state.articles, item]
+                articles:  [...state.articles, item],
             }
             return nextState;
         default:

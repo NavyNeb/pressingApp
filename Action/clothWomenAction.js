@@ -1,9 +1,9 @@
-import { ADD_KIDS, REMOVE_KIDS, INCREASE_KIDS, DECREASE_KIDS, } from "../Store/types";
+import { ADD_WOMEN, REMOVE_WOMEN, INCREASE_WOMEN, DECREASE_WOMEN, } from "../Store/types";
 
-export const addKids = (id, price, name, totalItem, quantity, category, tarif) => (dispatch) =>{
+export const addWomen = (id, price, name, totalItem, quantity,category, tarif) => (dispatch) =>{
     console.log('pressed');
     dispatch({
-        type: ADD_KIDS,
+        type: ADD_WOMEN,
         payload: {
             id: id,
             price: price,
@@ -17,24 +17,24 @@ export const addKids = (id, price, name, totalItem, quantity, category, tarif) =
     console.log(name, totalItem, quantity);
 }
 
-export const removeKids = (id) => (dispatch) =>{
+export const removeWomen = (id) => (dispatch) =>{
     console.log("reduced");
     dispatch({
-        type: REMOVE_KIDS,
+        type: REMOVE_WOMEN,
         payload: id
     })
 }
 
-export const increase_kids = (id) => (dispatch) => {
+export const increase_women = (id) => (dispatch) => {
     dispatch({
-        type: INCREASE_KIDS,
+        type: INCREASE_WOMEN,
         payload: id
     })
 }
 
-export const decrease_kids = (id) => (dispatch) => {
+export const decrease_women = (id) => (dispatch) => {
     dispatch({
-        type: DECREASE_KIDS,
+        type: DECREASE_WOMEN,
         payload: id
     })
 }

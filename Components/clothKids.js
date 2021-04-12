@@ -1,51 +1,74 @@
-import React, { useEffect } from 'react';
-import { Flatlist, View, Text, TouchableOpacity, Dimensions, StatusBar, Image } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Flatlist, View, Text, TouchableOpacity, Dimensions, StatusBar, Image, FlatList } from 'react-native';
 import { connect } from "react-redux";
 import { Feather, MaterialIcons } from '@expo/vector-icons'
 import { ScrollView } from 'react-native';
-
 import { bindActionCreators } from "redux";
-import { getKids, removeKids } from "../Action/counterKids";
+import { WaveIndicator } from "react-native-indicators"
 const { width, height } = Dimensions.get('screen');
+import TarifKids from "./tarifKids";
 
-function Kids({ kidsCoths, getKids, removeKids }){
-  
-    function loadCloths(){
-        // return kidsCoths.items.map((item, id)=>{
-        //     return(
-        //         <View key = {item.id} style = {{ height: height / 10, marginBottom: 2,  backgroundColor: '#fff', alignItems: 'flex-start', display: 'flex', flexDirection: 'row', justifyContent: 'center',paddingRight: 8 }} >
-        //             <View style = {{ height: '100%', width: '15%', alignItems: 'center', justifyContent: 'center' }} >
-        //                 <Image style = {{height: 55, width: 55 }} source = {item.Image} />
-        //             </View>
-        //             <View style = {{ width: '85%', height: '100%', display: 'flex', flexDirection: 'row', paddingHorizontal: 6, alignItems: 'center', justifyContent: 'space-between'  }} >
-        //                 <Text style = {{ fontSize: 20, fontWeight: 'bold' }} >{item.name}</Text>
-        //                 <Text style = {{ fontSize: 12, fontWeight: '900' }} > {item.price} </Text>
-        //                 <View style = {{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', width: 90, }} > 
-        //                     <TouchableOpacity onPress = { () => removeKids(id) } style = {[{ width: 30, height: 30, backgroundColor: 'dodgerblue', borderRadius: 20, alignItems: 'center', justifyContent: 'center'} ,  { counter: 0 ? {opacity: 0} : {opacity: 1} }]}   >
-        //                     <Feather name= 'minus' size = {16} color = 'white' />
-        //                     </TouchableOpacity>
-        //                     <TouchableOpacity activeOpacity = {1} style = {{ marginHorizontal: 25 }} >
-        //                         <Text>{item.quantity}</Text>
-        //                     </TouchableOpacity>
-        //                     <TouchableOpacity onPress = { () => getKids(id) }  style = {{ width: 30, height: 30, backgroundColor: 'dodgerblue', borderRadius: 20, alignItems: 'center', justifyContent: 'center'  }} >
-        //                         <Feather name= 'plus' size = {16} color = 'white' />
-        //                     </TouchableOpacity>
-        //                 </View>
-        //             </View>
-        //         </View>
-        //     )
-        // })
-    }
-
+function Kids({ prestaId, servId }){
         
-        return(
-            <View style = {{ flex: 1, width, backgroundColor: '#f1f1f5', height }} >
-                 <Text style = {{  color: 'lightgray', fontSize: 16, fontWeight: 'bold', alignSelf:'center' }} >
-             
-            </Text>
-              <ScrollView>
-                {loadCloths()}
-              </ScrollView>
+    
+    const [data, setData] = useState([]);
+    const [see, setSee] = useState(true)
+    const [local, setLocal] = useState([]);
+    const [loading, setLoading] = useState(true)
+  
+    useEffect(() => {
+        fetch('http://pressingliveapp.herokuapp.com/viewset/tarif/?idprestataire=' + prestaId.value + '&idservice=' + servId.value)
+        .then((response)=> response.json())
+        .then((articleJson)=> {
+            console.log('response', articleJson );
+                let counter = 0
+            articleJson.map(item => {
+                console.log('item', item);
+                if( item.article.categorie_article == 6 ){
+                    if ( local.length != 0 ) {
+                        let existedTarif = local.find( tarif => tarif.id == item.id )
+                        if ( existedTarif ) {
+                            return false
+                          } else {
+                              return local.push({name: item.article.description, id: counter, price: item.prix, category: 'Enfant', quantity: 0, totalItem: 0, tarif: item.id  })
+                          }
+                    } else {
+                      setLocal(prevState => {
+                        
+                          console.log("prevState",prevState); 
+                          
+                          return[
+                              ...prevState, 
+                              {name: item.article.description, id: counter, price: item.prix, category: 'Enfant', quantity: 0, totalItem: 0, tarif: item.id  },
+                          ]
+                          
+                      })
+                    }
+                }
+              counter += 1
+             })
+            setLoading(false)
+        })
+    }, [0])
+
+    
+    return(
+            <View style = {{ flex: 1, width, backgroundColor: '#f1f1f5', height, alignItems: 'center', justifyContent: 'center' }} >
+            {
+                    loading ? ( <WaveIndicator size = {60} animating interaction /> ) : local.length !== 0 ? ( 
+                     <FlatList 
+                        data = {local}
+                        keyExtractor = { local => local.id.toString() }
+                        renderItem = { ({item}) => (
+                            <View>
+                                <TarifKids name={item.name} price={item.price} totalItem={item.totalItem} id={item.id} category={item.category} tarif = {item.tarif} />
+                            </View>
+                        )}
+                    />
+                     ) : ( <Text>
+                         No item here 
+                     </Text> )
+            }
             </View>
         )
     }
@@ -53,19 +76,12 @@ function Kids({ kidsCoths, getKids, removeKids }){
 
 function mapStateToProps(state){
     return {
-        kidsCoths: state.counter_3
+        kidsCoths: state.counter_3,
+        prestaId: state.getId,
+        servId: state.servId,
     }
 }
 
-function mapDispatchToProps(dispatch){
-    return {
-       dispatch,
-       ...bindActionCreators({
-           getKids,
-           removeKids
-       }, dispatch)
-    }
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Kids)
+export default connect(mapStateToProps, undefined)(Kids)
 

@@ -10,8 +10,12 @@ import GetPickAddress from './address';
 import GetDeliveryAddress  from "./deliveryAddress";
 import Commande from "./commande";
 import reqOrder from "./reqOrders";
+import DeliveryId from "./deliveryAddessId";
+import PickId from "./pickAddressId"
 
 export default combineReducers({
+    pikId: PickId,
+    devId: DeliveryId,
     Order: reqOrder,
     commande: Commande,
     deliveryAddress: GetDeliveryAddress,

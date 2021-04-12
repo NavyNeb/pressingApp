@@ -2,9 +2,41 @@ import React, { useState } from "react";
 import { View, ScrollView, Text, Dimensions, Image } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
 const { width, height } = Dimensions.get('screen');
-export default function OrderDetails({navigation}) {
+function OrderDetails({navigation, commande}) {
+    var date = new Date()
+    console.log(date);
+    const loadPrices = () => {
+        
+        if ( Array.isArray(commande.commande.orderItem) && commande.commande.orderItem.length ) {
+         return commande.commande.orderItem.map((item)=>{
+             return (
+                 <TouchableOpacity key = {item.id} activeOpacity = {1} style = {{ paddingVertical: 2 }} > 
+                     <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }} >
+                         <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', }}>
+                             <Text style = {{ fontWeight: 'bold', color: '#000', marginRight: 14, fontSize: 14 }} >{item.quantity}</Text>
+                             <Text style={{ fontWeight: 'bold', marginRight: 6, color: '#000', fontSize: 14 }} >X</Text>
+                             <Text style = {{ fontWeight: 'bold',width: width / 1.95, color: '#000', backgroundColor: 'magenta', fontSize: 14 }} >{item.name}({item.category})</Text>
+                         </View>
+                         <Text style = {{ fontWeight: 'bold', color: '#000', fontSize: 14, marginLeft: 5 }} >{item.price}XAF</Text>
+                         <Text style = {{ fontWeight: 'bold', color: '#000', fontSize: 14, marginHorizontal: 5 }} >{item.totalItem}XAF</Text>
+                     </View>
+                 </TouchableOpacity>
+                )
+          })
+        } else {
+         return (
+             <View style = {{ width, height: height / 5, alignItems:'center', justifyContent: 'center' }} >
+                 <BarIndicator animating interaction size = {32} />
+             </View>
+         )
+        
+        }
+     }
+
     return (
         <View style={{ flex: 1, alignItems: 'center', backgroundColor: '#f1f1f5', width, height }} >
             <ScrollView>
@@ -14,8 +46,8 @@ export default function OrderDetails({navigation}) {
                         <Feather name='arrow-left' size={28} color='dodgerblue' />
                     </TouchableOpacity>
                     <View style={{ width: width - 70 }} >
-                        <Text style={{ fontSize: 18, textAlign: 'center', textAlign: 'center' }} >Order No.20202830</Text>
-                        <Text style={{ fontSize: 12, textAlign: 'center', color: 'gray' }} >22 December 2020</Text>
+                        <Text style={{ fontSize: 18, textAlign: 'center', textAlign: 'center' }} >Order No.{date.toLocaleDateString()}</Text>
+                        <Text style={{ fontSize: 12, textAlign: 'center', color: 'gray' }} >{date.toISOString()}</Text>
                     </View>
                 </View>
                 <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 25, width: width - 20, paddingHorizontal: 10 }} >
@@ -24,83 +56,118 @@ export default function OrderDetails({navigation}) {
                     </View>
                     <View style={{ alignItems: 'center', paddingHorizontal: 10, justifyContent: 'flex-start', alignItems: 'flex-start' }} >
                         <Text style={{ fontSize: 14, color: 'gray', marginBottom: 9 }} >Order Status</Text>
-                        <Text style={{ fontSize: 14, color: 'dodgerblue' }} >Order Confirmed</Text>
+                        <Text style={{ fontSize: 14, color: 'dodgerblue' }} >{commande.commande.payment.orderStatus}</Text>
                     </View>
                 </View>
             </View>
             <View style={{ width, height: height / 5, display: 'flex', justifyContent: 'center', backgroundColor: '#fff', marginBottom: 4 }} >
-                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }} >
-                    <View style={{ paddingHorizontal: 10 }} >
-                        <Text style={{ fontSize: 14, color: 'gray', marginVertical: 5 }} >Pick Up</Text>
-                        <Text style={{ fontSize: 14, color: '#000', fontWeight: 'bold' }} >Today, 22 December</Text>
-                        <Text style={{ fontSize: 14, color: 'gray' }} >01:00 pm - 02:00 pm</Text>
+                <ScrollView>
+                    <TouchableOpacity>
+                    <View>
+                        <Text style = {{ fontSize: 18, color: 'gray', alignSelf: 'center' }} >
+                            Pick Up
+                        </Text>
+                        <View style = {{ width: '100%', padding: 6 }} >
+                            <Text style = {{ fontSize: 14, color: '#000',   }} >
+                                City
+                            </Text>
+                            <Text style = {{ fontSize: 16, color: 'dodgerblue', fontWeight: 'bold'  }} >
+                                {commande.pickAddress.city}
+                            </Text>
+                        </View>
+                        <View style = {{ width: '100%', padding: 6 }} >
+                            <Text style = {{  fontSize: 14, color: '#000', }} >
+                                Quarters
+                            </Text>
+                            <Text style = {{ fontSize: 16, color: 'dodgerblue', fontWeight: 'bold'  }} >
+                                {commande.pickAddress.quarters}
+                            </Text>
+                        </View>
+                        <View style = {{ width: '100%', padding: 6 }} >
+                            <Text style = {{  fontSize: 14, color: '#000', }} >
+                                Description
+                            </Text>
+                            <Text style = {{ fontSize: 16, color: 'dodgerblue', fontWeight: 'bold'  }} >
+                                {commande.pickAddress.desc}
+                            </Text>
+                        </View>
                     </View>
-                    <View style={{ paddingHorizontal: 10 }} >
-                        <Text style={{ fontSize: 14, color: 'gray', marginVertical: 5 }} >Delivery</Text>
-                        <Text style={{ fontSize: 14, color: '#000', fontWeight: 'bold' }} >Tomorrow, 23 December</Text>
-                        <Text style={{ fontSize: 14, color: 'gray' }} >09:00 am - 10:00 am</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                    <View>
+                        <Text style = {{ fontSize: 18, color: 'gray', alignSelf: 'center' }} >
+                            Pick Up
+                        </Text>
+                        <View style = {{ width: '100%', padding: 6 }} >
+                            <Text style = {{ fontSize: 14, color: '#000',   }} >
+                                City
+                            </Text>
+                            <Text style = {{ fontSize: 16, color: 'dodgerblue', fontWeight: 'bold'  }} >
+                                {commande.deliveryAddress.city}
+                            </Text>
+                        </View>
+                        <View style = {{ width: '100%', padding: 6 }} >
+                            <Text style = {{  fontSize: 14, color: '#000', }} >
+                                Quarters
+                            </Text>
+                            <Text style = {{ fontSize: 16, color: 'dodgerblue', fontWeight: 'bold'  }} >
+                                {commande.deliveryAddress.quarters}
+                            </Text>
+                        </View>
+                        <View style = {{ width: '100%', padding: 6 }} >
+                            <Text style = {{  fontSize: 14, color: '#000', }} >
+                                Description
+                            </Text>
+                            <Text style = {{ fontSize: 16, color: 'dodgerblue', fontWeight: 'bold'  }} >
+                                {commande.deliveryAddress.desc}
+                            </Text>
+                        </View>
                     </View>
-                </View>
-                <View style={{ paddingHorizontal: 10, marginTop: 10, width, display: 'flex' }} >
-                    <Text style={{ fontSize: 14, color: 'gray', marginBottom: 5 }} >Pick up Address</Text>
-                    <Text style={{ fontSize: 14, color: '#000', fontWeight: 'bold' }} >Douala,Kotto village(carrefour soudeur face conteneur blue)</Text>
-                </View>
+                    </TouchableOpacity>
+                </ScrollView>
             </View>
-            <View style={{ width, height: height / 2.6, overflow: 'scroll' , backgroundColor: '#fff', paddingHorizontal: 8, display : 'flex', position :'relative'  }} >
+            <View style={{ width, height: height / 2.2, overflow: 'scroll' , backgroundColor: '#fff', paddingHorizontal: 8, display : 'flex', position :'relative'  }} >
                 <Text style={{ fontSize: 14, color: 'gray', marginVertical: 15 }} >Cloth List</Text>
                 <View>
                     <ScrollView style={{ height: height / 4.7,  }} >
-                        <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }} >
-                            <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', }}>
-                                <Text>(2)</Text>
-                                <Text style={{ marginHorizontal: 20 }} >X</Text>
-                                <Text>shirt(Man)</Text>
-                            </View>
-                            <Text>854XAF</Text>
-                        </View>
-                        <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }} >
-                            <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', }}>
-                                <Text>(2)</Text>
-                                <Text style={{ marginHorizontal: 20 }} >X</Text>
-                                <Text>Troussers(Man)</Text>
-                            </View>
-                            <Text>854XAF</Text>
-                        </View>
-                        <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }} >
-                            <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', }}>
-                                <Text>(2)</Text>
-                                <Text style={{ marginHorizontal: 20 }} >X</Text>
-                                <Text>blue t-shirt(Man)</Text>
-                            </View>
-                            <Text>854XAF</Text>
-                        </View>
-                        <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }} >
-                            <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', }}>
-                                <Text>(2)</Text>
-                                <Text style={{ marginHorizontal: 20 }} >X</Text>
-                                <Text>blue t-shirt(Man)</Text>
-                            </View>
-                            <Text>854XAF</Text>
-                        </View>
+                        {
+                            loadPrices()
+                        }
                     </ScrollView>
                 </View>
                 <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 7 }} >
                     <Text style={{ fontSize: 14, color: 'gray', }} >Sub Total</Text>
-                    <Text style={{ fontWeight: 'bold', color: '#000', }} >TotalXAF</Text>
+                    <Text style={{ fontWeight: 'bold', color: '#000', }} >{commande.commande.payment.total}XAF</Text>
                 </View>
                 <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }} >
                     <Text style={{ fontSize: 14, color: 'gray', }} >Transport</Text>
-                    <Text style={{ fontWeight: 'bold', color: '#000', }} >TotalXAF</Text>
+                    <Text style={{ fontWeight: 'bold', color: '#000', }} >1000XAF</Text>
+                </View>
+                <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 7 }} >
+                    <Text style={{ fontSize: 14, color: 'gray', }} >Amount Paid</Text>
+                    <Text style={{ fontWeight: 'bold', color: '#000', }} >{commande.commande.payment.amountGiven}XAF</Text>
+                </View>
+                <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 7 }} >
+                    <Text style={{ fontSize: 14, color: 'gray', }} >Left to Pay</Text>
+                    <Text style={{ fontWeight: 'bold', color: '#000', }} >{commande.commande.payment.leftOver}XAF</Text>
                 </View>
                 <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', }} >
-                    <Text style={{ fontSize: 14, color: 'dodgerblue', fontWeight: 'bold' }} >Paid vie Orange Money</Text>
-                    <Text style={{ fontSize: 14, color: 'dodgerblue', fontWeight: 'bold' }} >TotalXAF</Text>
+                    <Text style={{ fontSize: 14, color: 'dodgerblue', fontWeight: 'bold' }} >Paid via {}</Text>
+                    <Text style={{ fontSize: 14, color: 'dodgerblue', fontWeight: 'bold' }} >{commande.commande.payment.paymentMethod}</Text>
                 </View>
             </View>
-             <TouchableOpacity onPress = { () => navigation.navigate('Pressing') } style = {{ height: height / 12, width, backgroundColor: 'dodgerblue', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'column', justifyContent: 'center', }} >
-                    <Text style = {{ fontSize: 18, color: '#fff' }} >Amount Payable (XAF) </Text>
-            </TouchableOpacity>
+             {/* <TouchableOpacity onPress = { () => navigation.navigate('Pressing') } style = {{ height: height / 12, width, backgroundColor: 'dodgerblue', alignItems: 'center', justifyContent: 'space-between', flexDirection: 'column', justifyContent: 'center', }} >
+                    <Text style = {{ fontSize: 18, color: '#fff' }} >Amount Payable ({commande.commande.payment.total + 1000}XAF) </Text>
+            </TouchableOpacity> */}
             </ScrollView>
         </View >
     )
 }
+
+function mapStateToProps(state){
+    return{
+        commande: state.commande
+    }
+}
+
+export default connect(mapStateToProps, undefined)(OrderDetails)

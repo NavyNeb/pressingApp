@@ -9,28 +9,26 @@ import { orderActions } from "../Action/orderAction";
 
 const { width, height } = Dimensions.get('screen');
 
-function ReviewsOrder({navigation, prices, commande}){
+function ReviewsOrder({navigation, commande}){
    
-    const loadCommande = () => {
-        return commande.commande.orderItem = prices.addedItems
-    }
-    commande.commande.orderItem = prices.addedItems
-    commande.commande.payment.total = prices.total
     const loadPrices = () => {
-       if ( Array.isArray(prices.addedItems) && prices.addedItems.length ) {
-        return prices.addedItems.map((item)=>{
-            return (
-                <TouchableOpacity key = {item.id} activeOpacity = {1} style = {{ paddingHorizontal: 5, paddingVertical: 2 }} > 
-                    <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }} >
-                        <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', }}>
-                            <Text style = {{ fontWeight: 'bold', color: '#000', width: width / 7, fontSize: 18 }} >{item.quantity}</Text>
-                            <Text style={{ fontWeight: 'bold', color: '#000', marginRight: 30, fontSize: 18 }} >X</Text>
-                            <Text style = {{ fontWeight: 'bold', color: '#000', fontSize: 18 }} >{item.name}({item.category})</Text>
+       if ( Array.isArray(commande.commande.orderItem) && commande.commande.orderItem.length ) {
+        return commande.commande.orderItem.map((item)=>{
+            if (item.quantity != 0) {
+                return (
+                    <TouchableOpacity key = {item.id} activeOpacity = {1} style = {{ paddingVertical: 2 }} > 
+                        <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }} >
+                            <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', }}>
+                                <Text style = {{ fontWeight: 'bold', color: '#000', marginRight: 14, fontSize: 14 }} >{item.quantity}</Text>
+                                <Text style={{ fontWeight: 'bold', marginRight: 6, color: '#000', fontSize: 14 }} >X</Text>
+                                <Text style = {{ fontWeight: 'bold',width: width / 1.95, color: '#000', backgroundColor: 'magenta', fontSize: 14 }} >{item.name}({item.category})</Text>
+                            </View>
+                            <Text style = {{ fontWeight: 'bold', color: '#000', fontSize: 14, marginLeft: 5 }} >{item.price}XAF</Text>
+                            <Text style = {{ fontWeight: 'bold', color: '#000', fontSize: 14, marginHorizontal: 5 }} >{item.totalItem}XAF</Text>
                         </View>
-                        <Text style = {{ fontWeight: 'bold', color: '#000', fontSize: 18 }} >{item.price}XAF</Text>
-                    </View>
-                </TouchableOpacity>
-               )
+                    </TouchableOpacity>
+                   )
+            }
          })
        } else {
         return (
@@ -41,7 +39,7 @@ function ReviewsOrder({navigation, prices, commande}){
        
        }
     }
-    console.log(prices);
+
     console.log(commande);
     return(
         <View style = {{ width, height, flex: 1, backgroundColor: '#f1f1f5', }} >
@@ -71,20 +69,22 @@ function ReviewsOrder({navigation, prices, commande}){
                 <View style = {{ paddingHorizontal: 10 }} >
                     <View style = {{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingTop: 20, borderBottomWidth: 1, borderColor: '#f1f1f5' }} >
                         <Text style = {{ fontWeight: 'bold', color: '#97989f', fontSize: 17 }} >Sub Total</Text>
-                        <Text style = {{ fontWeight: 'bold', color: '#000', fontSize: 17 }} >{prices.total}XAF</Text>
+                        <Text style = {{ fontWeight: 'bold', color: '#000', fontSize: 17 }} >{commande.commande.payment.total } XAF</Text>
                     </View>
                     <View style = {{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingTop: 20, borderBottomWidth: 1, borderColor: '#f1f1f5', marginBottom: 10}} >
                         <Text style = {{ fontWeight: 'bold', color: '#97989f', fontSize: 17 }} >Transport</Text>
-                        <Text style = {{ fontWeight: 'bold', color: '#000', fontSize: 17 }} >1000XAF</Text>
+                        <Text style = {{ fontWeight: 'bold', color: '#000', fontSize: 17 }} > { commande.commande.payment.total !== 0 ? 1000 : 0 } XAF</Text>
                     </View>
                     <View style = {{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingTop: 20, borderBottomWidth: 1, borderColor: 'dodgerblue'}} >
                         <Text style = {{ fontWeight: 'bold', color: 'dodgerblue', fontSize: 17 }} >Payable amount</Text>
-                        <Text style = {{ fontWeight: 'bold', color: 'dodgerblue', fontSize: 17 }} >{ prices.total + 1000 }XAF</Text>
+                        <Text style = {{ fontWeight: 'bold', color: 'dodgerblue', fontSize: 17 }} >{ commande.commande.payment.total !== 0 ?  commande.commande.payment.total + 1000 : 0 }XAF</Text>
                     </View>
                 </View>
-                <TouchableOpacity onPress = { () => navigation.navigate('PickDelivery') } style = {{ height: height / 12, width, backgroundColor: 'dodgerblue', bottom: 0, position: 'absolute', alignItems: 'center', justifyContent: 'center', borderRadius: 20 }} >
-                    <Text style = {{ fontSize: 18, color: '#fff' }} >Confirmed Order <Entypo name = 'chevron-thin-right' color = '#fff' size = {14} /> </Text>
-                </TouchableOpacity>
+                <View style= { commande.commande.payment.total !== 0 ? { bottom: 0, position: 'absolute', } : { bottom: 0, position: 'absolute', opacity: 0.3 } } pointerEvents = { commande.commande.payment.total !== 0 ? 'auto' : 'none' } >
+                    <TouchableOpacity  onPress = { () => navigation.navigate('PickDelivery') } style = {{ height: height / 12, width, backgroundColor: 'dodgerblue',alignItems: 'center', justifyContent: 'center', borderRadius: 20 }} >
+                        <Text style = {{ fontSize: 18, color: '#fff' }} >Confirmed Order <Entypo name = 'chevron-thin-right' color = '#fff' size = {14} /> </Text>
+                    </TouchableOpacity>
+                </View>
              </View>
            
         </View>
@@ -93,9 +93,7 @@ function ReviewsOrder({navigation, prices, commande}){
 
 function mapStateToProps(state){
     return {
-        prices: state.counter_3,
         commande: state.commande,
-       
     }
 }
 

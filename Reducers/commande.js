@@ -1,16 +1,7 @@
-import { ADD_ORDER_ITEM } from "../Store/types";
+import { GET_PRESTA, GET_CLIENT } from "../Store/types";
 const InitialState = {
-    client: {
-        id: 2,
-        name: 'Samuel T',
-        tel: '6991749634',
-        mail: 'samuelT@gmail.com',
-        address: {
-            city: 'Douale',
-            quarters: 'bonaberi',
-            desc: '4etage washington, depot Guinness'
-        },
-    },
+    client: 0,
+    prestataire: 0,
     pickAddress: {
         city: '',
         quarters: '',
@@ -22,14 +13,14 @@ const InitialState = {
         desc: ''
     },
     commande: {
-        orderItem: [{
-
-        }],
+        orderItem: [],
         payment: {
+            amountGiven: 0,
+            leftOver: 0,
             total: 0,
-            orderStatus: 'PENDING',
-            paymentMethod: 'CASH',
-            paymentStatus: 'COMPLETED'
+            orderStatus: '',
+            paymentMethod: '',
+            paymentStatus: ''
         }
        
     }
@@ -37,13 +28,20 @@ const InitialState = {
 
 
 export default function Commande(state = InitialState, action){
+    let nextState 
     switch (action.type) {
-        case ADD_ORDER_ITEM:
-           return {
+        case GET_CLIENT:
+            nextState = {
                ...state,
-               orderItem: action.payload.order,
-               total: action.payload.total
+              client: action.payload
            }
+           return nextState
+        case GET_PRESTA:
+            nextState = {
+                ...state,
+                prestataire: action.payload
+            }
+            return nextState
         default:
             return state
     }

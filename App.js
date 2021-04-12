@@ -8,7 +8,7 @@ import  AppLoading  from "expo-app-loading";
 import * as Font from "expo-font";
 import Assigned from "./Components/pressing/assigned";
 import Service from "./Components/pressing/services";
-import Dash from "./Components/pressing/adminLogin";
+import Dash from "./Components/checkCommande";
 import { StyleSheet, Text, View } from 'react-native';
 
 export default function App() {

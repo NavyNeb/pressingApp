@@ -1,35 +1,18 @@
 import React, {useState} from 'react'
 import { View, Text, TouchableOpacity, Dimensions, Image } from 'react-native'
 import { Feather } from "@expo/vector-icons";
-import { addMen, removeMen, increase_men, decrease_men } from "../Action/counterMen";
+import { addWomen, removeWomen, increase_women, decrease_women } from "../Action/clothWomenAction";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 const { width, height } = Dimensions.get('screen')
 
-const TarifList = ({name, price, id, commande, category, addMen, increase_men, decrease_men, removeMen, tarif}) => {
+const TarifWomen = ({name, price, id, commande, addWomen, increase_women, category, tarif, decrease_women, removeWomen}) => {
 
     const [quantity, setQuantity] = useState(0)
     const [see, setSee] = useState(false)
     const [totalItem, setTotalItem] = useState(0)
 
-
-    function incQuan(){
-        setTotalItem( prev => {
-            prev = price * quantity
-        } )
-    }
-
-    function decQuan(){
-        setTotalItem( prev => {
-            if ( quantity > 0 ) {
-                prev = prev - price
-            } else {
-                
-            }
-         
-        } )
-    }
 
     return (
         <View style = {{ backgroundColor: '#fff', marginBottom: 2,}} >
@@ -50,7 +33,7 @@ const TarifList = ({name, price, id, commande, category, addMen, increase_men, d
                                             setQuantity(quan => {
                                                 return quan + 1
                                             })
-                                            addMen(id,price,name,totalItem,quantity,category,tarif)
+                                            addWomen(id,price,name,totalItem,quantity,category,tarif)
                                             setSee(!see)
                                             console.log("commande",commande);
                                             } } style = {{ backgroundColor: 'dodgerblue', height: height / 16, width: width / 3, justifyContent: 'center', alignItems: 'center', borderWidth: 2, borderColor: 'lightgray', borderRadius: 16 }} >
@@ -59,10 +42,10 @@ const TarifList = ({name, price, id, commande, category, addMen, increase_men, d
                                         </Text>
                                     </TouchableOpacity> ) : (
                                          <TouchableOpacity onPress = { () => {setSee(!see)
-                                         removeMen(id)
+                                         removeWomen(id)
                                          setQuantity( quan => {
-                                             return quan = 0
-                                         } )
+                                            return quan = 0
+                                        } )
                                          console.log("commande",commande);
                                          } } style = {{ backgroundColor: 'lightgray', height: height / 16, width: width / 3, justifyContent: 'center', alignItems: 'center', borderWidth: 2, borderColor: 'dodgerblue', borderRadius: 16 }} >
                                          <Text style = {{ fontSize: 17, color: '#fff' }} >
@@ -76,8 +59,7 @@ const TarifList = ({name, price, id, commande, category, addMen, increase_men, d
                                     <TouchableOpacity  onPress = { () => setQuantity( quan => {
                                        
                                         if( quan > 0 ){
-                                            decrease_men(id)
-                                            console.log("Men", commande);
+                                            decrease_women(id)
                                             return quan -= 1
                                             
                                         }else {
@@ -90,8 +72,7 @@ const TarifList = ({name, price, id, commande, category, addMen, increase_men, d
                                         <Text> {quantity} </Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity onPress = { () =>setQuantity(quan => {
-                                         increase_men(id)
-                                         console.log("Men", commande);
+                                         increase_women(id)
                                         return quan += 1
                                     })}  style = {{ width: 40, height: 40, backgroundColor: 'dodgerblue', borderRadius: 20, alignItems: 'center', justifyContent: 'center'  }} >
                                         <Feather name= 'plus' size = {16} color = 'white' />
@@ -105,7 +86,7 @@ const TarifList = ({name, price, id, commande, category, addMen, increase_men, d
 
 function mapStateToProps(state){
     return{
-        commande: state.counter_1
+        commande: state.counter_2
     }
 }
 
@@ -113,9 +94,9 @@ function mapDispatchToProps(dispatch){
     return{
         dispatch,
         ...bindActionCreators({
-            addMen, removeMen, increase_men, decrease_men
+            addKids, removeKids, increase_kids, decrease_kids
         }, dispatch)
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)( TarifList)
+export default connect(mapStateToProps, mapDispatchToProps)( TarifWomen)

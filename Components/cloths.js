@@ -5,24 +5,33 @@ import ClothTopTabs from "../routes/clothTopTabs";
 import { connect } from "react-redux";
 const { width, height } = Dimensions.get('screen');
 
-function Cloth({ navigation, Men, Women, Kids, Others }) {
+function Cloth({ navigation, Men, Women, Kids, commande }) {
    
-    // function calcTotal() {
-    //     let total = 0;
-    //     Men.forEach(element => {
-    //           total += element
-    //     });
-    //     Women.forEach(element => {
-    //           total += element
-    //     });
-    //     Kids.forEach(element => {
-    //           total += element
-    //     });
-    //     Others.forEach(element => {
-    //           total += element
-    //     });
-    //     return (total)
-    // }
+    function loadItems() {
+        let prevArr = []
+        let total = 0
+        Men.articles.forEach(element => {
+            let array3 = element;
+            commande.commande.orderItem = [...prevArr, array3]
+            console.log("element",commande.commande.orderItem);
+            prevArr = prevArr.concat(commande.commande.orderItem)
+            total += element.price * element.quantity
+        });
+        Women.articles.forEach(element => {
+            let array3 = element;
+            commande.commande.orderItem = [...prevArr, array3]
+            console.log("element",commande.commande.orderItem);
+            prevArr = prevArr.concat(commande.commande.orderItem)
+            total += element.price * element.quantity
+        });
+        Kids.articles.forEach(element => {
+            let array3 = element;
+            commande.commande.orderItem = [...prevArr, array3]
+            console.log("element",commande.commande.orderItem);
+            prevArr = prevArr.concat(commande.commande.orderItem)
+            total += element.price * element.quantity        });
+        commande.commande.payment.total = total
+    }
     return (
         <View style = {{ flex: 1, width, backgroundColor: '#f1f1f5', height }} >
             <StatusBar backgroundColor="lightgray" />
@@ -37,7 +46,9 @@ function Cloth({ navigation, Men, Women, Kids, Others }) {
                 <Text style = {{ color: '#fff', fontSize: 18 }} >
                     <Text style = {{ color: '#fff', fontSize: 12 }} >  Select your items here </Text>
                 </Text>
-                <TouchableOpacity onPress = { () => navigation.navigate('ReviewOrders') }  style = {{ width: 30, height: 30, backgroundColor: 'dodgerblue', alignItems: 'center', justifyContent: 'center', flexDirection: 'row'  }} >
+                <TouchableOpacity onPress = { () => {
+                    loadItems()
+                    navigation.navigate('ReviewOrders')} }  style = {{ width: 30, height: 30, backgroundColor: 'dodgerblue', alignItems: 'center', justifyContent: 'center', flexDirection: 'row'  }} >
                     <Text style = {{ color: '#fff', fontSize: 14 }} >Next</Text>
                     <MaterialIcons name="keyboard-arrow-right" size={28} color="white" />
                 </TouchableOpacity>
@@ -48,12 +59,10 @@ function Cloth({ navigation, Men, Women, Kids, Others }) {
 
 function mapStateToProps(state) {
     return{
-       
+            commande: state.commande,
             Men: state.counter_1,
             Women: state.counter_2,
             Kids: state.counter_3,
-            Others: state.counter_4
-        
     }
     
 }

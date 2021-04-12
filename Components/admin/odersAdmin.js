@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ScrollView, FlatList, Text, View, TouchableOpacity, Dimensions, StatusBar } from "react-native";
 import { Feather } from "@expo/vector-icons";
 
 const { width, height } = Dimensions.get('screen')
-export default function AdminOrders() {
+export default function AdminOrders({navigation}) {
     const [orders, setOrders] =useState([
         {
             key: '1', client: 'Sam Smith', amount: '5546800XAf', address: '15th street great avenue', 
@@ -26,6 +26,13 @@ export default function AdminOrders() {
             orderStatus: 'pending'
         },
     ])
+    useEffect(() => {
+        fetch('http://pressingliveapp.herokuapp.com/viewset/orderItem/')
+        .then((response) => response.json())
+        .then(respJson => {
+    
+        }) 
+    }, [0])
     return (
         <View style = {{ flex: 1, width, height, backgroundColor: '#f1f1f5',  }} >
             <StatusBar backgroundColor = 'lightgray' />
@@ -39,7 +46,7 @@ export default function AdminOrders() {
                     data = { orders }
                     keyExtractor = { orders.key }
                     renderItem = { ({item}) => (
-                        <TouchableOpacity activeOpacity = {0.7} >
+                        <TouchableOpacity onPress = { () => navigation.navigate('orderdetailsadmin') } activeOpacity = {0.7} >
                             <View style = {{ padding: 20, backgroundColor: '#fff', height: height / 5, marginBottom: 8, borderRadius: 9 }} >
                                 <View style = {{ flexDirection: 'row', alignItems: 'center',justifyContent: 'space-between' }} >
                                     <Text style = {{ color: '#000', fontSize: 15.5, fontWeight: 'bold' }} >{item.client}</Text>

@@ -1,7 +1,7 @@
 import { ADD_MEN, REMOVE_MEN, INCREASE_MEN, DECREASE_MEN, } from "../Store/types";
 
-export const addMen = (id, price, name, totalItem, quantity) => (dispatch) =>{
-    console.log('pressed');
+export const addMen = (id, price, name, totalItem, quantity, category, tarif) => (dispatch) =>{
+    console.log('pressed', quantity);
     dispatch({
         type: ADD_MEN,
         payload: {
@@ -9,7 +9,9 @@ export const addMen = (id, price, name, totalItem, quantity) => (dispatch) =>{
             price: price,
             name: name,
             totalItem: totalItem,
-            quantity: quantity
+            quantity: quantity,
+            category: category,
+            tarif: tarif
         }
     })
     console.log(name, totalItem, quantity);

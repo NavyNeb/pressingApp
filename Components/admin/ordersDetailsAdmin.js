@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { FlatList, View, Text, Dimensions, TouchableOpacity,StatusBar } from "react-native";
 import { Feather } from "@expo/vector-icons";
+import ClientData from "./clientData";
 
 const { width, height } = Dimensions.get('screen')
 
-export default function Orderdetails(params) {
+export default function Orderdetails({navigation}) {
     const [items, setItems] = useState([
         {
             key: '1', item: "jecket", qty: '3', amount: 200
@@ -32,7 +33,9 @@ export default function Orderdetails(params) {
             <StatusBar backgroundColor = 'lightgray' />
             <View style = {{ backgroundColor: '#fff', height: height / 3.6 }} >
                 <View style = {{ flexDirection: 'row', alignItems: 'center',justifyContent: "flex-start", marginTop: 10, paddingHorizontal: 10 }} >
-                    <Feather name = 'chevron-left' size = {28} color= 'dodgerblue' />
+                    <TouchableOpacity onPress ={ () => navigation.navigate('orderadmin') } >
+                        <Feather name = 'chevron-left' size = {28} color= 'dodgerblue' />
+                    </TouchableOpacity>
                     <Text style = {{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', marginLeft: 65 }} > Order UDL 2214 </Text>
                 </View>
                 <View style = {{ marginBottom: 30 }} >
@@ -65,31 +68,8 @@ export default function Orderdetails(params) {
                 </View>
 
             </View>
-            <View style = {{ backgroundColor: '#f1f1f5', height: height / 2 }} >
-                <View style = {{ width, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',backgroundColor: '#d4d4d4', marginVertical: 2, height: 50, paddingHorizontal: 10  }} >
-                    <Text>
-                        Items
-                    </Text>
-                    <View style = {{ width: width / 2.3, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }} >
-                        <Text>Qtty</Text>
-                        <Text>Amount</Text>
-                    </View>
-                </View>
-                <FlatList
-                    data = {items}
-                    keyExtractor = {items.key}
-                    renderItem = { ({item}) => (
-                        <View style = {{ width, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',backgroundColor: '#fff', marginVertical: 1, height: 50, paddingHorizontal: 10  }} >
-                            <Text>
-                                {item.item}
-                            </Text>
-                            <View style = {{ width: width / 2.3, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', }} >
-                                <Text>{item.qty}</Text>
-                                <Text>{item.amount} XAF</Text>
-                            </View>
-                        </View>
-                    )}
-                />
+            <View style = {{ backgroundColor: '#fff', height: height / 2, width }} >
+               <ClientData calcTotal = {calcTotal} />
                 <View style = {{ backgroundColor: '#fff', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 10, height: 56 }} >
                     <Text style ={{ fontSize: 17, fontWeight: 'bold', color: '#000' }} >Order Status</Text>
                     <TouchableOpacity>
@@ -111,7 +91,7 @@ export default function Orderdetails(params) {
                     <Text style = {{ fontSize: 20, color: '#fff' }} >Update</Text>
                 </TouchableOpacity>
             </View>
-            <View style = {{ position: 'absolute', height: height / 2.4, width: width / 1.4, borderRadius: 20, backgroundColor: '#fff', alignSelf: 'center', elevation: 3, bottom: 60, right: 10 }} >
+            {/* <View style = {{ position: 'absolute', height: height / 2.4, width: width / 1.4, borderRadius: 20, backgroundColor: '#fff', alignSelf: 'center', elevation: 3, bottom: 60, right: 10 }} >
                 <View style = {{ marginTop: 6, marginBottom: 10 }} >
                     <Text style = {{ textAlign: 'center' }} >Update Order Status</Text>
                 </View>
@@ -133,7 +113,7 @@ export default function Orderdetails(params) {
                 <TouchableOpacity activeOpacity = {0.5} style = {{ width: '100%', height: 45, backgroundColor: 'dodgerblue', alignItems: 'center', justifyContent: 'center',position: 'absolute', bottom: 0, borderBottomEndRadius: 20, borderBottomStartRadius: 20 }} >
                     <Text>Close</Text>
                 </TouchableOpacity>
-            </View>
+            </View> */}
         </View>
     )
 }
